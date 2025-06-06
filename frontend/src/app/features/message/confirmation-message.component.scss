@@ -1,0 +1,69 @@
+
+.message-container{
+position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5); // затемнення
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000; // високо над усім іншим
+  pointer-events: auto;
+}
+.confirmation-card {
+    display: flex;
+  flex-direction: column;
+  z-index: 1001;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 40px;
+  max-width: 728px;
+  height: 373px;
+  width: 100%;
+  gap: 32px;
+}
+.header-imgs{
+  display: flex;
+ justify-content: space-between;
+ .exit{
+  height: 36px;
+  width: 36px;
+  cursor: pointer;
+ }
+}
+
+.confirmation-details {
+  display: flex;
+  flex-direction: column;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: #374151;
+ 
+  gap: 16px;
+}
+
+.confirmation-details strong {
+  color: #1f2937;
+  font-weight: 700;
+}
+
+
+.main-button {
+  background-color: var(--main-color);
+  color: white;
+  min-height: 48px;
+  width: 100%;
+  border: none;
+  border-radius: 8px;
+  text-align: center;
+  font-size: 16px;
+  font-weight:600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+.main-button:hover{
+background-color: #4240E7;
+}

@@ -1,0 +1,21 @@
+<div class="message-container">
+    <div class="confirmation-card">
+        <div class="header-imgs">
+            <img clas="status" src="assets/img/message-delete.svg" alt="">
+            <img class="exit" (click)="exit()" src="assets/img/exit.svg" alt="">
+        </div>
+        <div class="confirmation-details">
+            <h2 class="confirmation-title">Cancel your booking?</h2>
+            <p>
+                This action cannot be undone
+            </p>
+        </div>
+        <div class="button-section">
+            <button class="main-button cancel" (click)="cancelBooking()">
+                Yes, cancel it</button>
+            <button class="main-button" (click)="exit()">
+                No, keep it
+            </button>
+        </div>
+    </div>
+</div>

@@ -22,12 +22,12 @@ namespace DeskBookingAPI.Controllers
             return Ok(bookings);
         }
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Guid>> GetBooking(Guid id)
+        [HttpGet("")]
+        public async Task<ActionResult<Guid>> GetAllBookings()
         {
             try
             {
-                var booking = await _bookingService.GetBooking(id);
+                var booking = await _bookingService.GetAllBookings();
                 return Ok(booking);
             }
             catch (KeyNotFoundException ex)

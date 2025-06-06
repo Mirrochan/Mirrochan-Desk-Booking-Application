@@ -10,6 +10,9 @@ namespace DeskBookingAPI.Profiles
 
             CreateMap<WorkspaceDto, Workspace>();
             CreateMap<Workspace, WorkspaceDto>();
+            CreateMap<WorkspacesListDto, Workspace>();
+                  
+            CreateMap<Workspace, WorkspacesListDto>();
 
         }
     }

@@ -1,6 +1,26 @@
 [
   {
     "ContainingType": "DeskBookingAPI.Controllers.BookingsController",
+    "Method": "GetAllBookings",
+    "RelativePath": "api/Bookings",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Guid",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "DeskBookingAPI.Controllers.BookingsController",
     "Method": "CreateBooking",
     "RelativePath": "api/Bookings",
     "HttpMethod": "POST",
@@ -40,32 +60,6 @@
       }
     ],
     "ReturnTypes": []
-  },
-  {
-    "ContainingType": "DeskBookingAPI.Controllers.BookingsController",
-    "Method": "GetBooking",
-    "RelativePath": "api/Bookings/{id}",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "id",
-        "Type": "System.Guid",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": [
-      {
-        "Type": "System.Guid",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
   },
   {
     "ContainingType": "DeskBookingAPI.Controllers.BookingsController",
@@ -113,6 +107,16 @@
     "ContainingType": "DeskBookingAPI.Controllers.WorkspaceController",
     "Method": "GetWorkspaces",
     "RelativePath": "api/workspaces",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "DeskBookingAPI.Controllers.WorkspaceController",
+    "Method": "GetWorkspacesList",
+    "RelativePath": "api/workspacesList",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,

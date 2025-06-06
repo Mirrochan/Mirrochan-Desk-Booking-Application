@@ -11,5 +11,7 @@ namespace DeskBookingAPI.DTOs
         public string WorkspaceName { get; set; } = string.Empty;
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
+        public int PeopleCount { get; set; } = 0;
+        public float Duration { get; set; } = 0;
     }
 }

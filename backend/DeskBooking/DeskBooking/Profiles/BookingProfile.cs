@@ -20,6 +20,7 @@ namespace DeskBookingAPI.Profiles
             CreateMap<BookingModel, BookingResponseDto>().
                 ForMember(dest => dest.WorkspaceName, opt => opt.MapFrom(src => src.Workspace.Name));
             CreateMap<BookingResponseDto, BookingModel>();
+     
             CreateMap<BookingUpdateDto, BookingCreateDto>();
 
         }

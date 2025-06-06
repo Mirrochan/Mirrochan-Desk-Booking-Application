@@ -15,7 +15,14 @@ builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddScoped<IBookingService, BookingService>();
 builder.Services.AddScoped<IWorkspaceService, WorkspaceService>();
 builder.Services.AddValidatorsFromAssemblyContaining<BookingCreateValidator>();
-
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll",
+        policy => policy
+            .AllowAnyOrigin()
+            .AllowAnyHeader()
+            .AllowAnyMethod());
+});
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
@@ -61,5 +68,5 @@ using (var scope = app.Services.CreateScope())
     var context = scope.ServiceProvider.GetRequiredService<DeskBookingContext>();
     context.Database.EnsureCreated();
 }
-
+app.UseCors("AllowAll");
 app.Run();

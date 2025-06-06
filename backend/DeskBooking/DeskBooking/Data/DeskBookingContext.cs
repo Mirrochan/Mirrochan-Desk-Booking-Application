@@ -15,7 +15,7 @@ namespace DeskBookingAPI.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // Booking → Workspace
+      
             modelBuilder.Entity<BookingModel>()
                 .HasOne(b => b.Workspace)
                 .WithMany(w => w.Bookings)
@@ -42,6 +42,7 @@ namespace DeskBookingAPI.Data
                 {
                     Id = Guid.Parse("f1d76f62-e4ff-4b68-82d7-9733fb57f3bd"),
                     Name = "Open Space",
+                    Description = "A vibrant shared area perfect for freelancers or small teams who enjoy a collaborative atmosphere. Choose any available desk and get to work with flexibility and ease.",
                     Type = WorkspaceType.OpenSpace,
                     Capacity = new int[] { },
                     Amenities = new string[] { "Conditioning", "Play", "Wi-Fi", "Coffee" }
@@ -50,6 +51,7 @@ namespace DeskBookingAPI.Data
                 {
                     Id = Guid.Parse("b2844205-b49b-4cf1-8389-b7cdb0a54372"),
                     Name = "Private Room",
+                    Description = "Ideal for focused work, video calls, or small team huddles. These fully enclosed rooms offer privacy and come in a variety of sizes to fit your needs.",
                     Type = WorkspaceType.PrivateRoom,
                     Capacity = new int[] { 1, 2, 5, 10 },
                     Amenities = new string[] { "Wi-Fi", "Conditioning", "Music" }
@@ -58,6 +60,7 @@ namespace DeskBookingAPI.Data
                 {
                     Id = Guid.Parse("51de8af8-a981-49d9-a276-8144384555bb"),
                     Name = "Meeting Room",
+                    Description = "Designed for productive meetings, workshops, or client presentations. Equipped with screens, whiteboards, and comfortable seating to keep your sessions running smoothly.",
                     Type = WorkspaceType.MeetingRoom,
                     Capacity = new int[] { 10, 20 },
                     Amenities = new string[] { "Wi-Fi", "Conditioning", "Music", "Micro" }

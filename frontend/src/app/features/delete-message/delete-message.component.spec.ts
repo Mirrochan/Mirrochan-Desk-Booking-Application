@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { BookingFormComponent } from './booking-form.component';
+import { DeleteMessageComponent } from './delete-message.component';
 
-describe('BookingFormComponent', () => {
-  let component: BookingFormComponent;
-  let fixture: ComponentFixture<BookingFormComponent>;
+describe('DeleteMessageComponent', () => {
+  let component: DeleteMessageComponent;
+  let fixture: ComponentFixture<DeleteMessageComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [BookingFormComponent]
+      imports: [DeleteMessageComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(BookingFormComponent);
+    fixture = TestBed.createComponent(DeleteMessageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -56,13 +56,28 @@ namespace DeskBookingAPI.Services
             await CreateBooking(_mapper.Map<BookingCreateDto>(updateBooking));
             await _context.SaveChangesAsync();
         }
-        public async Task<BookingResponseDto> GetBooking(Guid id)
+        public async Task<List<BookingResponseDto>> GetAllBookings()
         {
-            var booking = await _context.Bookings.Include(b => b.Workspace).FirstOrDefaultAsync(b => b.Id == id);
-            if (booking == null)
+            List<BookingResponseDto> bookings = await _context.Bookings
+    .Include(b => b.Workspace)
+    .Include(b => b.Room)
+    .Select(b=> new BookingResponseDto
+    {
+       Id= b.Id,
+        UserName = b.UserName,
+       UserEmail = b.UserEmail,
+        WorkspaceId = b.Workspace.Id,
+        WorkspaceName = b.Workspace.Name,
+        StartDate = b.StartDate,
+        EndDate = b.EndDate,
+        PeopleCount=b.Room.Capacity,
+        Duration = (float)(b.EndDate - b.StartDate).TotalHours
+    }).ToListAsync();
+            if (bookings == null)
                 throw new KeyNotFoundException("Booking not found");
+          
 
-            return _mapper.Map<BookingResponseDto>(booking);
+            return bookings;
         }
 
         public async Task<IEnumerable<BookingResponseDto>> GetBookings(string? email = null)
@@ -81,6 +96,10 @@ namespace DeskBookingAPI.Services
 
             if ((type == WorkspaceType.OpenSpace || type == WorkspaceType.PrivateRoom) && duration.TotalDays > 30)
                 throw new ArgumentException("Open spaces and private rooms can be booked for a maximum of 30 days");
+            if (duration.TotalDays < 0)
+            {
+                throw new ArgumentException("Invalid dates");
+            }
         }
 
         private async Task<WorkspaceAvailabilityOption> ValidateAvailability(Guid workspaceId, DateTime start, DateTime end, int peopleCount)

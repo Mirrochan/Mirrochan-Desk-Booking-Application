@@ -1,137 +1,64 @@
+
 <div class="workspaces-container">
   <h1>Available workspaces</h1>
 
-  <div class="workspace-card">
+  <div class="workspace-card" *ngFor="let workspace of workspaces">
     <div class="image-section">
-      <img src="assets/open_space/image.svg" alt="Open space" />
+      <img [src]="getWorkspaceImagePath(workspace, 'image1')" [alt]="workspace.name" />
       <div class="thumbnails">
-        <img src="assets/open_space/image.svg" />
-         <img src="assets/open_space/image-1.svg" />
-         <img src="assets/open_space/image-2.svg" />
-          <img src="assets/open_space/pexels-pixabay-221537 2.svg" />
+        <img  [src]="getWorkspaceImagePath(workspace, 'image1')" />
+         <img  [src]="getWorkspaceImagePath(workspace, 'image2')" />
+          <img  [src]="getWorkspaceImagePath(workspace, 'image3')" />
+           <img  [src]="getWorkspaceImagePath(workspace, 'image4')" />
       </div>
     </div>
     <div class="content-section">
       <div class="header">
-        <h2>Open space</h2>
-     
+        <h2>{{workspace.name}}</h2>
       </div>
-      <p>A vibrant shared area perfect for freelancers or small teams who enjoy a collaborative atmosphere. Choose any available desk and get to work with flexibility and ease.</p>
+      <p>{{workspace.description}}</p>
       <div class="details">
         <div class="section">
           <strong>Amenities</strong>
           <div class="icons">
-             <img src="assets/img/1.svg">
-             <img src="assets/img/2.svg">
-              <img src="assets/img/3.svg">
-               <img src="assets/img/4.svg">
+            <img *ngFor="let amenity of workspace.amenities" 
+                 [src]="getAmenityImage(amenity)" 
+                 [alt]="amenity" />
           </div>
         </div>
-        <div class="section feature">
-          <strong>Availability</strong>
-         <div class="icon-text">
-          <img src="assets/img/8.svg" alt="Desks icon" />
-  <span>24 desks</span>
-</div>
-        </div>
-      </div>
-      
-    </div><button class="book-btn">Book now</button>
-  </div>
-
-  <!-- Private Room -->
-   
-  <div class="workspace-card">
-    <div class="image-section">
-      <img src="assets/private_rooms/image.svg" alt="Private room" />
-      <div class="thumbnails">
-        <img src="assets/private_rooms/image.svg" />
-         <img src="assets/private_rooms/image-1.svg" />
-         <img src="assets/private_rooms/image-2.svg" />
-          <img src="assets/private_rooms/image-3.svg" />
-      </div>
-    </div>
-    <div class="content-section">
-      <div class="header">
-        <h2>Private rooms</h2>
-       
-      </div>
-      <p>Ideal for focused work, video calls, or small team huddles. These fully enclosed rooms offer privacy and come in a variety of sizes to fit your needs.</p>
-      <div class="details">
-        <div class="section">
-          <strong>Amenities</strong>
-          <div class="icons">
-           <img src="assets/img/3.svg">
-                <img src="assets/img/1.svg">
-                 <img src="assets/img/5.svg">
-                  
-          </div>
-        </div>
-       <div class="section feature">
+        
+        <div class="section feature" *ngIf="workspace.type !== workspaceType.OpenSpace">
           <strong>Capacity options</strong>
-           <div class="icon-text">
-         <img src="assets/img/7.svg"> <p>1, 2, 5, 10 people</p>
+          <div class="icon-text">
+            <img src="assets/img/People.svg" alt="Capacity icon">
+            <p>{{getCapacityDisplay(workspace)}}</p>
+          </div>
         </div>
-      </div>
-        <div class="section">
+        
+        <div class="section feature" *ngIf="workspace.type === workspaceType.OpenSpace || hasZeroCapacity(workspace)">
+          <strong>Availability</strong>
+          <div class="icon-text">
+            <img src="assets/img/Desks.svg" alt="Desks icon">
+            <span>{{getCapacityDisplay(workspace)}}</span>
+          </div>
+        </div>
+        
+        <div class="section" *ngIf="workspace.type !== workspaceType.OpenSpace && !hasZeroCapacity(workspace)">
           <strong>Availability</strong>
           <ul>
-            <li>7 rooms for 1 person</li>
-            <li>4 rooms for up to 2 people</li>
-            <li>3 rooms for up to 5 people</li>
-            <li>1 room for up to 10 people</li>
+            <li *ngFor="let option of workspace.availabilityOptions">
+             <strong>{{option.quantity}} {{option.unitType}}</strong>  for <span *ngIf="option.capacity===1; else morePeople">{{option.capacity}} person</span><ng-template #morePeople>up to {{option.capacity}} people</ng-template>
+            </li>
           </ul>
         </div>
         
-      </div>
-<div class="booking-note success">
-          ✅ This workspace is already booked by you! Room for 2 people May 18, 2025 to May 23, 2025
-        </div>
-    </div> <button class="book-btn">Book now</button>
-  </div>
-
-  <!-- Meeting Rooms -->
-  <div class="workspace-card">
-    <div class="image-section">
-      <img src="assets/meeting_rooms/image.svg" alt="Meeting room" />
-      <div class="thumbnails">
-        <img src="assets/meeting_rooms/image.svg" />
-        <img src="assets/meeting_rooms/image-1.svg" />
-        <img src="assets/meeting_rooms/image-2.svg" />
-        <img src="assets/meeting_rooms/image-3.svg" />
-      </div>
-    </div>
-    <div class="content-section">
-      <div class="header">
-        <h2>Meeting rooms</h2>
-        
-      </div>
-      <p>Designed for productive meetings, workshops, or client presentations. Equipped with screens, whiteboards, and comfortable seating to keep your sessions running smoothly.</p>
-      <div class="details">
-        <div class="section">
-          <strong>Amenities</strong>
-          <div class="icons">
-       <img src="assets/img/3.svg">
-                <img src="assets/img/1.svg">
-                <img src="assets/img/5.svg">
-                 <img src="assets/img/6.svg">
-          </div>
-        </div>
-        <div class="section feature">
-          <strong>Capacity options</strong>
-           <div class="icon-text">
-         <img src="assets/img/7.svg"> <p>10 or 20 people</p>
-        </div>
-      </div>
-        <div class="section">
-          <strong>Availability</strong>
-          <ul>
-            <li>4 rooms for up to 10 people</li>
-            <li>1 room for up to 20 people</li>
-          </ul>
+        <div class="booking-note success" *ngIf="workspace.isBookedByUser">
+          ✅ This workspace is already booked by you! {{workspace.bookingDetails}}
         </div>
       </div>
     </div>
-    <button class="book-btn">Book now</button>
+    <button class="book-btn" (click)="navigateToBooking(workspace.id)">
+      Book now
+    </button>
   </div>
 </div>

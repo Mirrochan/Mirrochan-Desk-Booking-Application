@@ -19,5 +19,12 @@ namespace DeskBookingAPI.Controllers
             return Ok(workspaces);
 
         }
+        [HttpGet]
+        [Route("api/workspacesList")]
+        public async Task<IActionResult> GetWorkspacesList()
+        {
+            var workspaces = await _workspaceService.WorkspacesList();
+            return Ok(workspaces);
+        }
     }
 }

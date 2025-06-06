@@ -4,7 +4,7 @@
   padding: 1rem;
 
   h1 {
-    font-size: 2rem;
+   
     margin-bottom: 2rem;
   }
 
@@ -58,7 +58,7 @@
  
       p {
         margin-top: 0.5rem;
-        color: #555;
+        color: #6B6B6B;
       }
 
       .details {
@@ -72,8 +72,7 @@
          }
         .section {
           margin-bottom: 0.75rem;
-         
-
+        
           .icons {
             margin-top: 12px;
             display: flex;
@@ -86,7 +85,16 @@
         }
 
         ul {
+          margin-top: 12px;
           padding-left: 1.5rem;
+          padding: 0px;
+          display: flex;
+          flex-direction: column;
+          gap:12px;
+          li{
+            list-style: none;
+            
+          }
         }
 
      

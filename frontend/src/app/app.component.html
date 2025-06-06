@@ -1,11 +1,16 @@
- <header class="app-header">
-      <img src="assets/img/Logo.svg" alt="">
-      <div class="sections">
-        <p>Workspaces</p>
-        <p>My bookings</p>
-      </div>
-    </header>
-    <main class="app-main">
-      <router-outlet></router-outlet>
-       <app-my-bookings></app-my-bookings>
-    </main>
+<header class="app-header">
+  <img src="assets/img/Logo.svg" alt="">
+  <div class="sections">
+<p [ngClass]="{ 'active': isActive === 1 }" (click)="goToWorkspace()">Workspaces</p>
+    <p [ngClass]="{ 'active': isActive === 2 }"(click)="goToMyBookings()">My bookings</p>
+  </div>
+</header>
+<main class="app-main">
+  
+    <router-outlet></router-outlet>
+
+   
+
+ 
+  
+</main>
