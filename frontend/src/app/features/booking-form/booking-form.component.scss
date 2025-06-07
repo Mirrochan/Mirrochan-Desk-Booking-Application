@@ -1,13 +1,39 @@
 /* book.component.scss */
-.booking-container {
-  margin: 2rem auto;
-}
+ .goback-btn {
+  display: flex;
+    width: 104px;
+    height: 36px;
+    gap: 4px;
+    border-radius: 4px;
+    padding-top: 8px;
+    padding-right: 16px;
+    padding-bottom: 8px;
+    cursor: pointer;
 
+    p {
+   
+      font-weight: 600;
+      font-size: 16px;
+      line-height: 120%;
+      letter-spacing: 0px;
+      color: var(--main-color);
+cursor: pointer;
+    }
+
+    img {
+      height: 20px;
+      width: 20px;
+    }
+  }
+.title{
+    margin-bottom: 44px;
+    margin-top: 20px;
+}
 .form-layout {
   display: flex;
   flex-direction: column;
   gap: 30px;
-  padding: 40px;
+
 
   @media (min-width: 900px) {
     flex-direction: row;
@@ -62,13 +88,14 @@ padding: 40px;
     width: 100%;
     padding: 0.75rem;
     border: 1px solid var(--border-color);
-    border-radius: 4px;
+    border-radius: 8px;
     font-size: 16px;
     height: 48px;
+    background-color: #FCFBFF;
 
     &:focus {
       outline: none;
-      box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.2);
+      
     }
   }
 }
@@ -91,6 +118,9 @@ padding: 40px;
 }
 .label-rooms{
   margin-bottom: 24px;
+  label{
+    margin-bottom: 0px;
+  }
 }
 .radio-group {
   display: flex;
@@ -145,6 +175,9 @@ padding: 40px;
   display: flex;
   flex-direction: column;
   gap: 12px;
+  label{
+    margin-bottom: 0px;
+  }
 }
 
 .custom-radio {
@@ -152,14 +185,13 @@ padding: 40px;
   align-items: center;
   gap: 12px;
   cursor: pointer;
+ 
 }
 
-/* Ховаємо стандартну радіо-кнопку */
 .custom-radio input[type="radio"] {
   display: none;
 }
 
-/* Квадратна кнопка */
 .radio-box {
   width: 24px;
   height: 24px;
@@ -177,4 +209,8 @@ padding: 40px;
 input[type="radio"]:checked + .radio-box {
   background-color: var(--main-color); 
   border-color:  var(--main-color);
+}
+.buttons{
+  display: flex;
+  gap:16px;
 }

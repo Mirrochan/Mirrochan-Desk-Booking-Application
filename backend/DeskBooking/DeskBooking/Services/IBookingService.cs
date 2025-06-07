@@ -7,7 +7,7 @@ namespace DeskBookingAPI.Services
         Task<Guid> CreateBooking(BookingCreateDto bookingDTO);
         Task DeleteBooking(Guid id);
         Task<List<BookingResponseDto>> GetAllBookings();
-        Task<IEnumerable<BookingResponseDto>> GetBookings(string? email = null);
+        Task<BookingResponseDto> GetBooking(Guid Id);
         Task UpdateBooking(BookingUpdateDto updateBooking);
     }
 }

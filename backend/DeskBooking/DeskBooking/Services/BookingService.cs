@@ -52,9 +52,15 @@ namespace DeskBookingAPI.Services
         }
         public async Task UpdateBooking(BookingUpdateDto updateBooking)
         {
+            try { 
+  
+            await CreateBooking(_mapper.Map<BookingCreateDto>(updateBooking));          
             await DeleteBooking(updateBooking.Id);
-            await CreateBooking(_mapper.Map<BookingCreateDto>(updateBooking));
-            await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();}
+            catch(Exception ex) when (ex is ArgumentException || ex is InvalidOperationException)
+            {
+                throw new InvalidOperationException("Failed to update booking: " + ex.Message);
+            }
         }
         public async Task<List<BookingResponseDto>> GetAllBookings()
         {
@@ -80,11 +86,11 @@ namespace DeskBookingAPI.Services
             return bookings;
         }
 
-        public async Task<IEnumerable<BookingResponseDto>> GetBookings(string? email = null)
+        public async Task<BookingResponseDto> GetBooking(Guid id)
         {
-            var query = await _context.Bookings.Include(b => b.Workspace).Where(b => b.UserEmail == email).ToListAsync();
-            return  query
-                .Select(b => _mapper.Map<BookingResponseDto>(b))  ;
+            var query = await _context.Bookings.Include(b => b.Workspace).FirstOrDefaultAsync(b => b.Id == id);
+            return  
+                _mapper.Map<BookingResponseDto>(query) ;
         }
 
         private void ValidateBookingDuration(WorkspaceType type, DateTime start, DateTime end)

@@ -21,9 +21,11 @@ export class DeleteMessageComponent {
     this.bookingService.deleteBooking(this.idDelete).subscribe({
       error: err => console.log()
     });
-    
-    this.router.navigate(["/my-bookings"]);
+    setTimeout(() => {
+ this.router.navigate(["/my-bookings"]);
         this.close.emit();
+}, 1000);
+   
   }
 
 }

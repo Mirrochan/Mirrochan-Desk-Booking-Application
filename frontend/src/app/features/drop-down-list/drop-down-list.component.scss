@@ -1,6 +1,7 @@
 .dropdown-container {
   position: relative;
   width: 100%;
+
 }
 
 .dropdown-button {
@@ -12,10 +13,16 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: white;
+  background-color: #FCFBFF;
   height: 48px;
-  font-size: 16px;
-  
+  font-size: 16px;  
+  color: black;
+  font-family: Inter;
+font-weight: 500;
+font-size: 16px;
+line-height: 120%;
+letter-spacing: 0px;
+
 }
 
 .arrow {
@@ -30,7 +37,7 @@
   top: calc(100% + 6px);
   left: 0;
   right: 0;
-  background: #f8f8ff;
+  background: #FCFBFF;
   border: 1px solid #d3d3f2;
   border-radius: 6px;
   max-height: 200px;

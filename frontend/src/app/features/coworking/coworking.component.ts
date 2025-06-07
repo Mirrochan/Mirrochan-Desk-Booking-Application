@@ -30,7 +30,7 @@ export class CoworkingComponent implements OnInit {
   }
   getWorkspaceImagePath(workspace: WorkspaceInfoDto, imageName: string): string {
     const workspaceFolder = workspace.name.toLowerCase().replace(' ', '_');
-    return `assets/${workspaceFolder}/${imageName}.svg`;
+    return `assets/${workspaceFolder}/${imageName}.png`;
   }
 
   getAmenityImage(amenity: string): string {
@@ -53,7 +53,20 @@ export class CoworkingComponent implements OnInit {
   navigateToBooking(workspaceId: string): void {
     this.router.navigate(['/booking']);
   }
+selectedImages: { [workspaceId: string]: string } = {};
 
+getAllWorkspaceImages(workspace: any): string[] {
+  return [
+    this.getWorkspaceImagePath(workspace, 'image1'),
+    this.getWorkspaceImagePath(workspace, 'image2'),
+    this.getWorkspaceImagePath(workspace, 'image3'),
+    this.getWorkspaceImagePath(workspace, 'image4')
+  ];
+}
+
+selectImage(workspaceId: string, imageUrl: string) {
+  this.selectedImages[workspaceId] = imageUrl;
+}
 
 }
 

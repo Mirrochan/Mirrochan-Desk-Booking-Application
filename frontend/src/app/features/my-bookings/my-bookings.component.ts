@@ -3,28 +3,31 @@ import { all_bookingsDto } from '../../data/interfaces/all_bookings.interface';
 import { BookingsService } from '../../data/services/bookings.service';
 import { CommonModule } from '@angular/common';
 import { DeleteMessageComponent } from "../delete-message/delete-message.component";
+import { EmptyBookinglistComponent } from "../empty-bookinglist/empty-bookinglist.component";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-my-bookings',
-  imports: [CommonModule, DeleteMessageComponent],
+  imports: [CommonModule, DeleteMessageComponent, EmptyBookinglistComponent],
   templateUrl: './my-bookings.component.html',
   styleUrl: './my-bookings.component.scss'
 })
 export class MyBookingsComponent {
-
+  constructor(private router: Router) { }
+  noBookings: boolean = false;
   allBookings: all_bookingsDto[] | null = null;
 
   bookingService = inject(BookingsService);
   ngOnInit() {
-this.loadBookings();
+    this.loadBookings();
   }
   showMessage: boolean = false;
   chosenBookingId: string = '';
 
   deleteBooking(id: string) {
-this.chosenBookingId=id;
-this.showMessage=true;
-this.loadBookings();
+    this.chosenBookingId = id;
+    this.showMessage = true;
+    this.loadBookings();
   }
 
   printDate(startDateRaw: Date | string, endDateRaw: Date | string) {
@@ -82,12 +85,20 @@ this.loadBookings();
 
   getImage(name: string) {
     const nameFolder = name.toLocaleLowerCase().replace(' ', '_')
-    return `assets/${nameFolder}/image1.svg`;
+    return `assets/${nameFolder}/image1.png`;
   }
-  loadBookings(){
-        this.bookingService.getAllBookings().subscribe({
-      next: (val) => (this.allBookings = val),
-      error: err => console.error()
-    });
-  }
+  loadBookings() {
+  this.bookingService.getAllBookings().subscribe({
+    next: (val) => {
+      this.allBookings = val;
+      this.noBookings = !val || val.length === 0;
+    },
+    error: err => {
+      console.error(err);
+      this.noBookings = true; // показуємо, якщо сталася помилка
+    }
+  });
+}editBooking(id: string) {
+  this.router.navigate(['/bookings/edit', id]);
+}
 }

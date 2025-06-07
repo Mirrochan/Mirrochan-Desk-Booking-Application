@@ -3,59 +3,65 @@
   margin: 2rem auto;
   padding: 1rem;
 
+
+
   h1 {
-   
+
     margin-bottom: 2rem;
   }
 
   .workspace-card {
     display: flex;
     background: white;
-    border-radius: 8px;
+    border-radius: 20px;
     margin-bottom: 2rem;
     overflow: hidden;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     padding: 16px;
 
     .image-section {
       flex: 1;
+
       img {
         width: 340px;
         height: auto;
         display: block;
-        border-radius: 4px;
+        border-radius: 16px;
       }
 
       .thumbnails {
         display: flex;
-        gap: 0.5rem;
-        padding: 0.5rem;
+        gap: 8px;
+        margin-top: 12px;
 
         img {
-          width: auto;
+          width: 79px;
           height: 64px;
           object-fit: cover;
-          border-radius: 4px;
+          border-radius: 8px;
         }
       }
     }
 
     .content-section {
-      flex: 2;
-      padding: 1rem;
-
+      display: flex;
+      flex-direction: column;
+      margin-left: 32px;
+      width: 876px;
+      
+      gap: 32px;
+      padding-top: 12px;
+      padding-bottom: 12px;
       .header {
         display: flex;
         justify-content: space-between;
         align-items: center;
-
         h2 {
           margin: 0;
         }
 
-       
+
       }
- 
+
       p {
         margin-top: 0.5rem;
         color: #6B6B6B;
@@ -63,24 +69,27 @@
 
       .details {
         margin-top: 1rem;
- display:grid;
-             grid-template-columns: repeat(2, 1fr);
-.feature{
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+gap:32px;
+        .feature {
 
           display: flex;
-          flex-direction:column;
-         }
+          flex-direction: column;
+        }
+
         .section {
           margin-bottom: 0.75rem;
-        
+
           .icons {
             margin-top: 12px;
             display: flex;
-            gap:12px;
-          img{
-            height: 44px;
-            width: 44px;
-          }
+            gap: 12px;
+
+            img {
+              height: 44px;
+              width: 44px;
+            }
           }
         }
 
@@ -90,46 +99,68 @@
           padding: 0px;
           display: flex;
           flex-direction: column;
-          gap:12px;
-          li{
+          gap: 12px;
+
+          li {
             list-style: none;
-            
+
           }
         }
 
-     
-       
+
+
       }
     }
   }
 }
- .book-btn {
-          background: #4f46e5;
-          color: white;
-          padding: 0.5rem 1rem;
-          border: none;
-          border-radius: 6px;
-          cursor: pointer;
-           height: 48px;
-          width: 180px;
-        }
+
+.book-btn {
+  background: #4f46e5;
+  color: white;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  height: 48px;
+  width: 180px;
+}
 
 .icon-text {
   margin-top: 12px;
-  display: inline-flex;    
-  align-items: center;     
-  gap: 0.5rem;            
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
 
   img {
-    display: block;       
+    display: block;
   }
 }
-   .booking-note.success {
-    position: absolute;
-          background: #e6f7ec;
-        border-radius: 4px;
-          padding: 0.5rem;
-          font-size: 0.9rem;
-          margin-top: 0.5rem;
-        width: 720px;
-        }
+
+.booking-note.success {
+  position: absolute;
+  background: #e6f7ec;
+  border-radius: 4px;
+  padding: 0.5rem;
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+  width: 720px;
+}
+
+.thumbnails img {
+  height: 60px;
+  width: 80px;
+  object-fit: cover;
+  cursor: pointer;
+  border-radius: 4px;
+  border: 2px solid transparent;
+  opacity: 0.5;
+  transition: border 0.2s ease, opacity 0.2s ease;
+}
+
+.thumbnails img.selected {
+  opacity: 1;
+}
+
+.thumbnails img:hover {
+  opacity: 0.8;
+}

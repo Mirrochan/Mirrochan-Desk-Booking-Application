@@ -1,32 +1,33 @@
-
 <div class="workspaces-container">
   <h1>Available workspaces</h1>
 
   <div class="workspace-card" *ngFor="let workspace of workspaces">
     <div class="image-section">
-      <img [src]="getWorkspaceImagePath(workspace, 'image1')" [alt]="workspace.name" />
+      <img [src]="selectedImages[workspace.id] || getWorkspaceImagePath(workspace, 'image1')" [alt]="workspace.name"
+        class="main-image" />
+
       <div class="thumbnails">
-        <img  [src]="getWorkspaceImagePath(workspace, 'image1')" />
-         <img  [src]="getWorkspaceImagePath(workspace, 'image2')" />
-          <img  [src]="getWorkspaceImagePath(workspace, 'image3')" />
-           <img  [src]="getWorkspaceImagePath(workspace, 'image4')" />
+        <img *ngFor="let img of getAllWorkspaceImages(workspace)" [src]="img" (click)="selectImage(workspace.id, img)"
+          [class.selected]="selectedImages[workspace.id] === img" />
       </div>
     </div>
+
     <div class="content-section">
+      <div class="">
       <div class="header">
         <h2>{{workspace.name}}</h2>
       </div>
       <p>{{workspace.description}}</p>
+
+</div>
       <div class="details">
         <div class="section">
           <strong>Amenities</strong>
           <div class="icons">
-            <img *ngFor="let amenity of workspace.amenities" 
-                 [src]="getAmenityImage(amenity)" 
-                 [alt]="amenity" />
+            <img *ngFor="let amenity of workspace.amenities" [src]="getAmenityImage(amenity)" [alt]="amenity" />
           </div>
         </div>
-        
+
         <div class="section feature" *ngIf="workspace.type !== workspaceType.OpenSpace">
           <strong>Capacity options</strong>
           <div class="icon-text">
@@ -34,7 +35,7 @@
             <p>{{getCapacityDisplay(workspace)}}</p>
           </div>
         </div>
-        
+
         <div class="section feature" *ngIf="workspace.type === workspaceType.OpenSpace || hasZeroCapacity(workspace)">
           <strong>Availability</strong>
           <div class="icon-text">
@@ -42,16 +43,18 @@
             <span>{{getCapacityDisplay(workspace)}}</span>
           </div>
         </div>
-        
+
         <div class="section" *ngIf="workspace.type !== workspaceType.OpenSpace && !hasZeroCapacity(workspace)">
           <strong>Availability</strong>
           <ul>
             <li *ngFor="let option of workspace.availabilityOptions">
-             <strong>{{option.quantity}} {{option.unitType}}</strong>  for <span *ngIf="option.capacity===1; else morePeople">{{option.capacity}} person</span><ng-template #morePeople>up to {{option.capacity}} people</ng-template>
+              <strong>{{option.quantity}} {{option.unitType}}</strong> for <span
+                *ngIf="option.capacity===1; else morePeople">{{option.capacity}} person</span><ng-template
+                #morePeople>up to {{option.capacity}} people</ng-template>
             </li>
           </ul>
         </div>
-        
+
         <div class="booking-note success" *ngIf="workspace.isBookedByUser">
           ✅ This workspace is already booked by you! {{workspace.bookingDetails}}
         </div>

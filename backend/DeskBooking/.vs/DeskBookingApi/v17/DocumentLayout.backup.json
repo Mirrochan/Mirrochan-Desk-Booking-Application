@@ -7,6 +7,14 @@
       "RelativeMoniker": "D:0:0:{E5B4F1D9-3B4B-40F1-828E-9DF1339383A6}|DeskBooking\\DeskBookingAPI.csproj|solutionrelative:deskbooking\\services\\bookingservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{E5B4F1D9-3B4B-40F1-828E-9DF1339383A6}|DeskBooking\\DeskBookingAPI.csproj|e:\\individualproject\\backend\\deskbooking\\deskbooking\\controllers\\bookingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E5B4F1D9-3B4B-40F1-828E-9DF1339383A6}|DeskBooking\\DeskBookingAPI.csproj|solutionrelative:deskbooking\\controllers\\bookingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E5B4F1D9-3B4B-40F1-828E-9DF1339383A6}|DeskBooking\\DeskBookingAPI.csproj|e:\\individualproject\\backend\\deskbooking\\deskbooking\\services\\ibookingservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E5B4F1D9-3B4B-40F1-828E-9DF1339383A6}|DeskBooking\\DeskBookingAPI.csproj|solutionrelative:deskbooking\\services\\ibookingservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{E5B4F1D9-3B4B-40F1-828E-9DF1339383A6}|DeskBooking\\DeskBookingAPI.csproj|e:\\individualproject\\backend\\deskbooking\\deskbooking\\services\\workspaceservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{E5B4F1D9-3B4B-40F1-828E-9DF1339383A6}|DeskBooking\\DeskBookingAPI.csproj|solutionrelative:deskbooking\\services\\workspaceservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -17,14 +25,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{E5B4F1D9-3B4B-40F1-828E-9DF1339383A6}|DeskBooking\\DeskBookingAPI.csproj|e:\\individualproject\\backend\\deskbooking\\deskbooking\\dtos\\bookingupdatedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{E5B4F1D9-3B4B-40F1-828E-9DF1339383A6}|DeskBooking\\DeskBookingAPI.csproj|solutionrelative:deskbooking\\dtos\\bookingupdatedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E5B4F1D9-3B4B-40F1-828E-9DF1339383A6}|DeskBooking\\DeskBookingAPI.csproj|e:\\individualproject\\backend\\deskbooking\\deskbooking\\services\\ibookingservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E5B4F1D9-3B4B-40F1-828E-9DF1339383A6}|DeskBooking\\DeskBookingAPI.csproj|solutionrelative:deskbooking\\services\\ibookingservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E5B4F1D9-3B4B-40F1-828E-9DF1339383A6}|DeskBooking\\DeskBookingAPI.csproj|e:\\individualproject\\backend\\deskbooking\\deskbooking\\controllers\\bookingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E5B4F1D9-3B4B-40F1-828E-9DF1339383A6}|DeskBooking\\DeskBookingAPI.csproj|solutionrelative:deskbooking\\controllers\\bookingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{E5B4F1D9-3B4B-40F1-828E-9DF1339383A6}|DeskBooking\\DeskBookingAPI.csproj|e:\\individualproject\\backend\\deskbooking\\deskbooking\\services\\iworkspaceservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -82,7 +82,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 5,
               "Title": "BookingUpdateDto.cs",
               "DocumentMoniker": "E:\\IndividualProject\\backend\\DeskBooking\\DeskBooking\\DTOs\\BookingUpdateDto.cs",
               "RelativeDocumentMoniker": "DeskBooking\\DTOs\\BookingUpdateDto.cs",
@@ -94,7 +94,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 4,
               "Title": "BookingResponseDto.cs",
               "DocumentMoniker": "E:\\IndividualProject\\backend\\DeskBooking\\DeskBooking\\DTOs\\BookingResponseDto.cs",
               "RelativeDocumentMoniker": "DeskBooking\\DTOs\\BookingResponseDto.cs",
@@ -118,13 +118,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 1,
               "Title": "BookingController.cs",
               "DocumentMoniker": "E:\\IndividualProject\\backend\\DeskBooking\\DeskBooking\\Controllers\\BookingController.cs",
               "RelativeDocumentMoniker": "DeskBooking\\Controllers\\BookingController.cs",
               "ToolTip": "E:\\IndividualProject\\backend\\DeskBooking\\DeskBooking\\Controllers\\BookingController.cs",
               "RelativeToolTip": "DeskBooking\\Controllers\\BookingController.cs",
-              "ViewState": "AgIAABAAAAAAAAAAAAAgwB0AAAA7AAAAAAAAAA==",
+              "ViewState": "AgIAABAAAAAAAAAAAAAgwBEAAAAQAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-06-05T17:18:03.993Z"
             },
@@ -136,7 +136,7 @@
               "RelativeDocumentMoniker": "DeskBooking\\Services\\BookingService.cs",
               "ToolTip": "E:\\IndividualProject\\backend\\DeskBooking\\DeskBooking\\Services\\BookingService.cs",
               "RelativeToolTip": "DeskBooking\\Services\\BookingService.cs",
-              "ViewState": "AgIAAEoAAAAAAAAAAAAYwGQAAAA6AAAAAAAAAA==",
+              "ViewState": "AgIAAC8AAAAAAAAAAAAgwDkAAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-06-05T14:03:50.801Z",
               "EditorCaption": ""
@@ -155,13 +155,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 2,
               "Title": "IBookingService.cs",
               "DocumentMoniker": "E:\\IndividualProject\\backend\\DeskBooking\\DeskBooking\\Services\\IBookingService.cs",
               "RelativeDocumentMoniker": "DeskBooking\\Services\\IBookingService.cs",
               "ToolTip": "E:\\IndividualProject\\backend\\DeskBooking\\DeskBooking\\Services\\IBookingService.cs",
               "RelativeToolTip": "DeskBooking\\Services\\IBookingService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAuwAgAAAA2AAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAuwAkAAAAfAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-06-03T11:46:47.568Z"
             },
@@ -215,7 +215,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 3,
               "Title": "WorkspaceService.cs",
               "DocumentMoniker": "E:\\IndividualProject\\backend\\DeskBooking\\DeskBooking\\Services\\WorkspaceService.cs",
               "RelativeDocumentMoniker": "DeskBooking\\Services\\WorkspaceService.cs",

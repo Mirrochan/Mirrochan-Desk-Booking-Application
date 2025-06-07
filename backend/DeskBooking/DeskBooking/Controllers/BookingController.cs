@@ -15,14 +15,14 @@ namespace DeskBookingAPI.Controllers
             _bookingService = bookingService;
         }
 
-        [HttpGet("byEmail")]
-        public async Task<ActionResult<IEnumerable<BookingResponseDto>>> GetBookings([FromQuery] string? email)
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<BookingResponseDto>>> GetBookings([FromQuery] Guid id)
         {
-            var bookings = await _bookingService.GetBookings(email);
+            var bookings = await _bookingService.GetBooking(id);
             return Ok(bookings);
         }
 
-        [HttpGet("")]
+        [HttpGet("getAll")]
         public async Task<ActionResult<Guid>> GetAllBookings()
         {
             try

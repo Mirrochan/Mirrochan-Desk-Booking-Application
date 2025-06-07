@@ -1,23 +1,26 @@
-<div class="container">
-   <app-delete-message
-   *ngIf="showMessage"
-  [idDelete]="chosenBookingId"
-  (close)="showMessage = false; this.loadBookings()">
-</app-delete-message>
 
-    <h1>Available workspaces</h1>
+    <app-delete-message *ngIf="showMessage" [idDelete]="chosenBookingId"
+        (close)="showMessage = false; this.loadBookings()">
+    </app-delete-message>
+    <div class="title">
+        <h1 *ngIf="!noBookings">My bookings on Green Coworking</h1>
+        <h1 *ngIf="noBookings">My bookings</h1>
+    </div>
+    <app-empty-bookinglist *ngIf="noBookings">
+    </app-empty-bookinglist>
     <div *ngFor="let booking of allBookings" class="card">
         <div class="image-section">
             <img [src]="getImage(booking.workspaceName)" alt="Open space" />
         </div>
         <div class="content-section">
             <div class="header">
-                <h2>{{booking.workspaceName}}  <span class="h2" *ngIf="booking.peopleCount >0"> for {{booking.peopleCount}} people </span></h2>
+                <h2>{{booking.workspaceName}} <span class="h2" *ngIf="booking.peopleCount >0"> for
+                        {{booking.peopleCount}} people </span></h2>
             </div>
             <div class="card-info">
                 <div class="icon-text">
                     <img src="assets/img/Calendar.svg" alt="Desks icon" />
-                    <span >{{printDate(booking.startDate,booking.endDate)}}</span>
+                    <span>{{printDate(booking.startDate,booking.endDate)}}</span>
                 </div>
                 <div class="icon-text">
                     <img src="assets/img/Clock.svg" alt="Desks icon" />
@@ -26,7 +29,9 @@
             </div>
         </div>
         <div class="card-actions">
-            <img src="assets/img/Edit.svg" alt=""> <img src="assets/img/Delete.svg" (click)="deleteBooking(booking.id)" alt="">
+            <img src="assets/img/Edit.svg" (click)="editBooking(booking.id)" alt="">
+            
+            <img src="assets/img/Delete.svg" (click)="deleteBooking(booking.id)"
+                alt="">
         </div>
     </div>
-</div>

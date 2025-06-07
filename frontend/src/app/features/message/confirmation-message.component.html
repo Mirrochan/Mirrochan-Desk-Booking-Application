@@ -14,9 +14,6 @@
             </p>
             <p *ngIf="message!=='confirmation-message'">{{desc}}</p>
         </div>
-
-        <button *ngIf="message == 'cancel-message'" (click)="cancelBooking()">
-            Yes, cancel it</button>
         <button class="main-button" (click)="navigateToPages()">
             {{buttonName}}
         </button>

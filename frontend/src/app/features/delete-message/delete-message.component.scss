@@ -67,11 +67,7 @@ position: fixed;
 .main-button:hover{
 background-color: #4240E7;
 }
-.main-button .cancel{
-  background-color: white;
-  color: var(--main-color);
-  border-color:var(--main-color) ;
-}
+
 .button-section{
   display: flex;
   gap: 16px;

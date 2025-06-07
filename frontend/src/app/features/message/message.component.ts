@@ -12,17 +12,18 @@ import { routes } from '../../app.routes';
 })
 
 export class MessageComponent implements OnInit {
-    @Input() message: string = '';
+  @Input() message: string = '';
   @Input() data: AddBookingDto | null = null;
   @Output() close = new EventEmitter<void>();
-constructor(private router: Router) { }
+  constructor(private router: Router) { }
+ 
   imgUrl: string = "assets/img/Error.svg";
   info: string = "Error";
   desc: string = this.message;
   buttonName: string = "Return";
   ngOnInit(): void {
-
-
+    this.desc=this.message;
+   console.log(this.data);
     switch (this.message) {
       case 'confirmation-message': {
         this.imgUrl = 'assets/img/messag-confirm.svg';
@@ -31,48 +32,43 @@ constructor(private router: Router) { }
         this.buttonName = 'My bookings';
         break;
       }
-      case 'cancel-message': {
-        this.imgUrl = 'assets/img/Error.svg';
-        this.info = "Cancel your booking?";
-        this.desc = 'This action cannot be undone';
-        this.buttonName = 'No, keep it';
-        break;
-      }
       case 'notavailable-message': {
-          this.imgUrl = 'assets/img/Error.svg';
+        this.imgUrl = 'assets/img/Error.svg';
         this.info = "Selected time is not available";
         this.desc = 'Please choose a different time slot';
         this.buttonName = 'Check availability';
         break;
       }
-    
+      case 'confirmation-update-message':{
+        this.imgUrl = 'assets/img/messag-confirm.svg';
+        this.info = "Your booking has been successfully updated.";
+        this.desc = '';
+        this.buttonName = 'My bookings';
+        break;
+      }
     }
-
   }
-  exit(){
+  exit() {
     this.close.emit();
   }
   navigateToPages() {
-   switch(this.buttonName){
-    case 'My bookings':{
-      this.router.navigate(['/my-bookings']);
-      break;
+    switch (this.buttonName) {
+      case 'My bookings': {
+        this.router.navigate(['/my-bookings']);
+        break;
+      }
+      case 'No, keep it': {
+        this.close.emit();
+        break;
+      }
+      case 'Return': {
+        this.close.emit();
+        break;
+      }
+      case 'Check availability': {
+        this.close.emit();
+      }
     }
-     case 'No, keep it':{
-      this.close.emit();
-       break;
-    }
-    case 'Return':{
-      this.close.emit();
-       break;
-    }
-     case 'Check availability':{
-      this.close.emit();
-    }
-   }
-  }
-  cancelBooking() {
-
   }
 }
 

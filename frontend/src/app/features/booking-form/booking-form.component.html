@@ -1,134 +1,113 @@
-
-<div class="booking-container"> 
-    <h1>Book your workspace</h1>
-
-<form class="form-layout" (ngSubmit)="onSubmit()" #bookingForm="ngForm">
-  <div class="form-left">
-    <app-message
-  *ngIf="showMessage"
-  [message]="messageType"
-  [data]="bookingDto"
-  (close)="showMessage = false"
-></app-message>
-    <section class="reservation-section">
-      <h2>Reservation details</h2>
-
-      <div class="form-group">
-        <label for="name">Name</label>
-        <input type="text" id="name" name="name" [(ngModel)]="bookingData.name" required>
-      </div>
-
-      <div class="form-group">
-        <label for="email">Email</label>
-        <input type="email" id="email" name="email" [(ngModel)]="bookingData.email" required>
-      </div>
-
-      <div class="form-group">
-        <label>Workspace type</label>
-        <app-drop-down-list name="workspaceType" [(ngModel)]="bookingData.workspaceType" [items]="workspaceTypes"
-          placeholder="Choose your workspace" (selected)="onWorkspaceTypeChange()" [required]="true">
-        </app-drop-down-list>
-      </div>
-
-      <div class="form-group" *ngIf="showCapacityOptions">
-  <div class="label-rooms">
-    <label>What room size do you need?</label>
+<div class="booking-container">
+  <div class="goback-btn" (click)="goToMyBookings()">
+    <img src="assets/img/goBack.svg" alt="">
+    <p>Go back</p>
   </div>
-  <div class="radio-group">
-    <label *ngFor="let capacity of availableCapacities" class="custom-radio">
-      <input
-        type="radio"
-        name="capacity"
-        [(ngModel)]="bookingData.capacity"
-        [value]="capacity"
-        required
-      />
-      <span class="radio-box">
-        <img
-          *ngIf="bookingData.capacity === capacity"
-          class="checkmark"
-          src="assets/img/Vector.svg"
-        />
-      </span>
-      Room for {{ capacity }} person{{ capacity > 1 ? 's' : '' }}
-    </label>
+  <div class="title">
+    <h1>{{ mode === 'add' ? 'Book your workspace' : 'Edit your booking' }}</h1>
   </div>
-</div>
-
-
-    </section>
-  </div>
-
-  <div class="form-right">
-    <section class="datetime-section">
-      <h2>Choose date and time</h2>
-
-      <div class="block-date">
-        <h3>Start date</h3>
-        <div class="date-grid">
-          <div class="form-group">
-            <app-drop-down-list name="startDay" [(ngModel)]="bookingData.startDay" [items]="days"
-              placeholder="Select day" [required]="true">
-            </app-drop-down-list>
-          </div>
-          <div class="form-group">
-            <app-drop-down-list name="startMonth" [(ngModel)]="bookingData.startMonth" [items]="months"
-              placeholder="Select month" [required]="true">
-            </app-drop-down-list>
-          </div>
-          <div class="form-group">
-            <app-drop-down-list name="startYear" [(ngModel)]="bookingData.startYear" [items]="years"
-              placeholder="Select year" [required]="true">
-            </app-drop-down-list>
-          </div>
-        </div>
-      </div>
-
-      <div class="block-date">
-        <h3>End date</h3>
-        <div class="date-grid">
-          <div class="form-group">
-            <app-drop-down-list name="endDay" [(ngModel)]="bookingData.endDay" [items]="days" placeholder="Day"
-              [required]="true">
-            </app-drop-down-list>
-          </div>
-          <div class="form-group">
-            <app-drop-down-list name="endMonth" [(ngModel)]="bookingData.endMonth" [items]="months" placeholder="Month"
-              [required]="true">
-            </app-drop-down-list>
-          </div>
-          <div class="form-group">
-            <app-drop-down-list name="endYear" [(ngModel)]="bookingData.endYear" [items]="years" placeholder="Year"
-              [required]="true">
-            </app-drop-down-list>
-          </div>
-        </div>
-      </div>
-
-      <div class="block-date">
-        <h3>Start time</h3>
-
+  <form class="form-layout" (ngSubmit)="onSubmit()" #bookingForm="ngForm">
+    <div class="form-left">
+      <app-message *ngIf="showMessage" [message]="messageType" [data]="bookingDate"
+        (close)="showMessage = false"></app-message>
+      <section class="reservation-section">
+        <h2>Reservation details</h2>
         <div class="form-group">
-          <app-drop-down-list name="startTime" [(ngModel)]="bookingData.startTime" [items]="timeSlots"
-            placeholder="Select start time" [required]="true">
+          <label for="name">Name</label>
+          <input type="text" id="name" name="name" [(ngModel)]="bookingData.name" required>
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" [(ngModel)]="bookingData.email" required>
+        </div>
+        <div class="form-group">
+          <label>Workspace type</label>
+          <app-drop-down-list name="workspaceType" [(ngModel)]="bookingData.workspaceType" [items]="workspaceTypes"
+            placeholder="Choose your workspace" (selected)="onWorkspaceTypeChange()" [required]="true">
           </app-drop-down-list>
         </div>
-
-      </div>
-
-      <div class="block-date">
-        <h3>End time</h3>
-
-        <div class="form-group">
-          <app-drop-down-list name="endTime" [(ngModel)]="bookingData.endTime" [items]="timeSlots"
-            placeholder="Select end time" [required]="true">
-          </app-drop-down-list>
+        <div class="form-group" *ngIf="showCapacityOptions">
+          <div class="label-rooms">
+            <label>What room size do you need?</label>
+          </div>
+          <div class="radio-group">
+            <label *ngFor="let capacity of availableCapacities" class="custom-radio">
+              <input type="radio" name="capacity" [(ngModel)]="bookingData.capacity" [value]="capacity" required />
+              <span class="radio-box">
+                <img *ngIf="bookingData.capacity === capacity" class="checkmark" src="assets/img/Vector.svg" />
+              </span>
+              Room for {{ capacity }} person{{ capacity > 1 ? 's' : '' }}
+            </label>
+          </div>
         </div>
-
-      </div>
-
-      <button type="submit" [disabled]="!bookingForm.valid" class="submit-btn">Submit</button>
-    </section>
-  </div>
-</form>
+      </section>
+    </div>
+    <div class="form-right">
+      <section class="datetime-section">
+        <h2>Choose date and time</h2>
+        <div class="block-date">
+          <h3>Start date</h3>
+          <div class="date-grid">
+            <div class="form-group">
+              <app-drop-down-list name="startDay" [(ngModel)]="bookingData.startDay" [items]="startDays"
+                placeholder="Select day" [required]="true">
+              </app-drop-down-list>
+            </div>
+            <div class="form-group">
+              <app-drop-down-list name="startMonth" [(ngModel)]="bookingData.startMonth" [items]="monthNames"
+                placeholder="Select month" (selected)="onMonthChange(true)" [required]="true">
+              </app-drop-down-list>
+            </div>
+            <div class="form-group">
+              <app-drop-down-list name="startYear" [(ngModel)]="bookingData.startYear" [items]="years"
+                placeholder="Select year" (selected)="onYearChange(true)" [required]="true">
+              </app-drop-down-list>
+            </div>
+          </div>
+        </div>
+        <div class="block-date">
+          <h3>End date</h3>
+          <div class="date-grid">
+            <div class="form-group">
+              <app-drop-down-list name="endDay" [(ngModel)]="bookingData.endDay" [items]="endDays" placeholder="Day"
+                [required]="true">
+              </app-drop-down-list>
+            </div>
+            <div class="form-group">
+              <app-drop-down-list name="endMonth" [(ngModel)]="bookingData.endMonth" [items]="monthNames"
+                placeholder="Month" (selected)="onMonthChange(false)" [required]="true">
+              </app-drop-down-list>
+            </div>
+            <div class="form-group">
+              <app-drop-down-list name="endYear" [(ngModel)]="bookingData.endYear" [items]="years" placeholder="Year"
+                (selected)="onYearChange(false)" [required]="true">
+              </app-drop-down-list>
+            </div>
+          </div>
+        </div>
+        <div class="block-date">
+          <h3>Start time</h3>
+          <div class="form-group">
+            <app-drop-down-list name="startTime" [(ngModel)]="bookingData.startTime" [items]="timeSlots"
+              placeholder="Select start time" [required]="true">
+            </app-drop-down-list>
+          </div>
+        </div>
+        <div class="block-date">
+          <h3>End time</h3>
+          <div class="form-group">
+            <app-drop-down-list name="endTime" [(ngModel)]="bookingData.endTime" [items]="timeSlots"
+              placeholder="Select end time" [required]="true">
+            </app-drop-down-list>
+          </div>
+        </div>
+        <div class="buttons">
+          <button type="submit" [disabled]="!bookingForm.valid" class="submit-btn">
+            {{ mode === 'add' ? 'Submit' : 'Update Booking' }}
+          </button>
+          <button *ngIf="mode!=='add'" class="second-btn" (click)="goToMyBookings()">Cancel</button>
+        </div>
+      </section>
+    </div>
+  </form>
 </div>

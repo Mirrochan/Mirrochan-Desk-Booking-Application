@@ -8,21 +8,26 @@ import { UpdateBookingDto } from '../interfaces/update_booking.interface';
   providedIn: 'root'
 })
 export class BookingsService {
-  http: HttpClient = inject(HttpClient)
+  private readonly apiUrl = "https://localhost:7060/api/Bookings";
+  http: HttpClient = inject(HttpClient);
+
   addNewBooking(data: AddBookingDto) {
-    return this.http.post<AddBookingDto>("https://localhost:7060/api/Bookings", data);
+    return this.http.post<AddBookingDto>(this.apiUrl, data);
   }
+
   deleteBooking(id: string) {
-    return this.http.delete(`https://localhost:7060/api/Bookings/${id}`);
+    return this.http.delete(`${this.apiUrl}/${id}`);
   }
+
   getAllBookings() {
-    return this.http.get<all_bookingsDto[]>("https://localhost:7060/api/Bookings");
+    return this.http.get<all_bookingsDto[]>(this.apiUrl+'/getAll');
   }
-  updateBooking(data:UpdateBookingDto){
-    return this.http.put("https://localhost:7060/api/Bookings",data);
-  }
- 
 
+  getBookingById(id: string) {
+    return this.http.get<UpdateBookingDto>(`${this.apiUrl}?id=${id}`);
+  }
+
+  updateBooking(data: UpdateBookingDto) {
+    return this.http.put(this.apiUrl, data);
+  }
 }
-
-

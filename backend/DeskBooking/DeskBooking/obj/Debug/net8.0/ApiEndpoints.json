@@ -1,15 +1,21 @@
 [
   {
     "ContainingType": "DeskBookingAPI.Controllers.BookingsController",
-    "Method": "GetAllBookings",
+    "Method": "GetBookings",
     "RelativePath": "api/Bookings",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
-    "Parameters": [],
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": false
+      }
+    ],
     "ReturnTypes": [
       {
-        "Type": "System.Guid",
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[DeskBookingAPI.DTOs.BookingResponseDto, DeskBookingAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -79,21 +85,15 @@
   },
   {
     "ContainingType": "DeskBookingAPI.Controllers.BookingsController",
-    "Method": "GetBookings",
-    "RelativePath": "api/Bookings/byEmail",
+    "Method": "GetAllBookings",
+    "RelativePath": "api/Bookings/getAll",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
-    "Parameters": [
-      {
-        "Name": "email",
-        "Type": "System.String",
-        "IsRequired": false
-      }
-    ],
+    "Parameters": [],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.IEnumerable\u00601[[DeskBookingAPI.DTOs.BookingResponseDto, DeskBookingAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "System.Guid",
         "MediaTypes": [
           "text/plain",
           "application/json",
