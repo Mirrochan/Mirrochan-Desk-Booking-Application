@@ -104,6 +104,26 @@
     ]
   },
   {
+    "ContainingType": "DeskBookingAPI.Controllers.BookingsController",
+    "Method": "GetLastBooking",
+    "RelativePath": "api/Bookings/last",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "DeskBookingAPI.DTOs.BookingResponseDto",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
     "ContainingType": "DeskBookingAPI.Controllers.WorkspaceController",
     "Method": "GetWorkspaces",
     "RelativePath": "api/workspaces",

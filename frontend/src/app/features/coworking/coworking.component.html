@@ -1,7 +1,7 @@
 <div class="workspaces-container">
   <h1>Available workspaces</h1>
-
-  <div class="workspace-card" *ngFor="let workspace of workspaces">
+<div class="div" *ngFor="let workspace of workspaces" >
+  <div class="workspace-card">
     <div class="image-section">
       <img [src]="selectedImages[workspace.id] || getWorkspaceImagePath(workspace, 'image1')" [alt]="workspace.name"
         class="main-image" />
@@ -13,13 +13,17 @@
     </div>
 
     <div class="content-section">
-      <div class="">
-      <div class="header">
-        <h2>{{workspace.name}}</h2>
+      <div class="head">
+        <div class="">
+          <div class="header">
+            <h2>{{workspace.name}}</h2>
+          </div>
+          <p>{{workspace.description}}</p>
+        </div>
+        <button class="book-btn" (click)="navigateToBooking(workspace.id)">
+          Book now
+        </button>
       </div>
-      <p>{{workspace.description}}</p>
-
-</div>
       <div class="details">
         <div class="section">
           <strong>Amenities</strong>
@@ -54,14 +58,11 @@
             </li>
           </ul>
         </div>
-
-        <div class="booking-note success" *ngIf="workspace.isBookedByUser">
-          ✅ This workspace is already booked by you! {{workspace.bookingDetails}}
-        </div>
+      </div>
+      <div class="booking-note success" *ngIf="lastValidBooking?.workspaceId === workspace.id">
+       <img src="assets/img/messag-confirm.svg" alt=""> This workspace is already booked by you! Room for{{lastValidBooking?.peopleCount}} people <strong> {{formatDateRange(lastValidBooking?.startDate,lastValidBooking?.endDate)}}</strong>
       </div>
     </div>
-    <button class="book-btn" (click)="navigateToBooking(workspace.id)">
-      Book now
-    </button>
+  </div>
   </div>
 </div>

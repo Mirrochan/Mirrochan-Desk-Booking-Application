@@ -30,4 +30,7 @@ export class BookingsService {
   updateBooking(data: UpdateBookingDto) {
     return this.http.put(this.apiUrl, data);
   }
+  getLastValidBooking(){
+    return this.http.get<all_bookingsDto>(this.apiUrl+"/last");
+  }
 }

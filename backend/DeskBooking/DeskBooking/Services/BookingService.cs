@@ -23,6 +23,7 @@ namespace DeskBookingAPI.Services
             if (workspace == null)
                 throw new ArgumentException("Invalid workspace ID");
 
+            ValidateBookingDates(bookingDTO.StartDate, bookingDTO.EndDate);
             ValidateBookingDuration(workspace.Type, bookingDTO.StartDate, bookingDTO.EndDate);
 
             var availabilityOption = await ValidateAvailability(
@@ -35,6 +36,7 @@ namespace DeskBookingAPI.Services
             var booking = _mapper.Map<BookingModel>(bookingDTO);
             booking.RoomId = availabilityOption.Id;
             booking.Workspace = workspace;
+
             _context.Bookings.Add(booking);
             await _context.SaveChangesAsync();
 
@@ -50,47 +52,82 @@ namespace DeskBookingAPI.Services
             _context.Bookings.Remove(booking);
             await _context.SaveChangesAsync();
         }
-        public async Task UpdateBooking(BookingUpdateDto updateBooking)
+
+        public async Task UpdateBooking(BookingUpdateDto updateDto)
         {
-            try { 
-  
-            await CreateBooking(_mapper.Map<BookingCreateDto>(updateBooking));          
-            await DeleteBooking(updateBooking.Id);
-            await _context.SaveChangesAsync();}
-            catch(Exception ex) when (ex is ArgumentException || ex is InvalidOperationException)
-            {
-                throw new InvalidOperationException("Failed to update booking: " + ex.Message);
-            }
+            var booking = await _context.Bookings.FindAsync(updateDto.Id);
+            if (booking == null)
+                throw new KeyNotFoundException("Booking not found");
+
+            var workspace = await _context.Workspaces.FindAsync(updateDto.WorkspaceId);
+            if (workspace == null)
+                throw new ArgumentException("Invalid workspace ID");
+
+            ValidateBookingDates(updateDto.StartDate, updateDto.EndDate);
+            ValidateBookingDuration(workspace.Type, updateDto.StartDate, updateDto.EndDate);
+
+            var availabilityOption = await ValidateAvailability(
+                updateDto.WorkspaceId,
+                updateDto.StartDate,
+                updateDto.EndDate,
+                updateDto.PeopleCount
+            );
+
+            // Update fields
+            booking.UserName = updateDto.UserName;
+            booking.UserEmail = updateDto.UserEmail;
+            booking.StartDate = updateDto.StartDate;
+            booking.EndDate = updateDto.EndDate;
+            booking.RoomId = availabilityOption.Id;
+            booking.WorkspaceId = updateDto.WorkspaceId;
+            booking.Workspace = workspace;
+
+            await _context.SaveChangesAsync();
         }
+
         public async Task<List<BookingResponseDto>> GetAllBookings()
         {
-            List<BookingResponseDto> bookings = await _context.Bookings
-    .Include(b => b.Workspace)
-    .Include(b => b.Room)
-    .Select(b=> new BookingResponseDto
-    {
-       Id= b.Id,
-        UserName = b.UserName,
-       UserEmail = b.UserEmail,
-        WorkspaceId = b.Workspace.Id,
-        WorkspaceName = b.Workspace.Name,
-        StartDate = b.StartDate,
-        EndDate = b.EndDate,
-        PeopleCount=b.Room.Capacity,
-        Duration = (float)(b.EndDate - b.StartDate).TotalHours
-    }).ToListAsync();
-            if (bookings == null)
-                throw new KeyNotFoundException("Booking not found");
-          
-
-            return bookings;
+            return await _context.Bookings
+                .Include(b => b.Workspace)
+                .Include(b => b.Room)
+                .Select(b => new BookingResponseDto
+                {
+                    Id = b.Id,
+                    UserName = b.UserName,
+                    UserEmail = b.UserEmail,
+                    WorkspaceId = b.Workspace.Id,
+                    WorkspaceName = b.Workspace.Name,
+                    StartDate = b.StartDate,
+                    EndDate = b.EndDate,
+                    PeopleCount = b.Room.Capacity,
+                    Duration = (float)(b.EndDate - b.StartDate).TotalHours
+                })
+                .ToListAsync();
         }
 
         public async Task<BookingResponseDto> GetBooking(Guid id)
         {
-            var query = await _context.Bookings.Include(b => b.Workspace).FirstOrDefaultAsync(b => b.Id == id);
-            return  
-                _mapper.Map<BookingResponseDto>(query) ;
+            var booking = await _context.Bookings
+                .Include(b => b.Workspace)
+                .Include(b => b.Room)
+                .FirstOrDefaultAsync(b => b.Id == id);
+
+            if (booking == null)
+                throw new KeyNotFoundException("Booking not found");
+
+            return _mapper.Map<BookingResponseDto>(booking);
+        }
+
+        private void ValidateBookingDates(DateTime start, DateTime end)
+        {
+            if (start < DateTime.UtcNow.Date)
+                throw new ArgumentException("Start date cannot be in the past");
+
+            if (end < DateTime.UtcNow.Date)
+                throw new ArgumentException("End date cannot be in the past");
+
+            if (end <= start)
+                throw new ArgumentException("End date must be after start date");
         }
 
         private void ValidateBookingDuration(WorkspaceType type, DateTime start, DateTime end)
@@ -102,10 +139,6 @@ namespace DeskBookingAPI.Services
 
             if ((type == WorkspaceType.OpenSpace || type == WorkspaceType.PrivateRoom) && duration.TotalDays > 30)
                 throw new ArgumentException("Open spaces and private rooms can be booked for a maximum of 30 days");
-            if (duration.TotalDays < 0)
-            {
-                throw new ArgumentException("Invalid dates");
-            }
         }
 
         private async Task<WorkspaceAvailabilityOption> ValidateAvailability(Guid workspaceId, DateTime start, DateTime end, int peopleCount)
@@ -122,12 +155,39 @@ namespace DeskBookingAPI.Services
                                    end > b.StartDate);
 
                 if (!isOverlapping)
-                {
                     return option;
-                }
             }
 
             throw new InvalidOperationException("The selected workspace is not available for the specified time period and people count.");
         }
+
+        public async Task<BookingResponseDto> GetLastBooking()
+        {
+            var booking = await _context.Bookings
+                .Include(b => b.Workspace)
+                .Include(b => b.Room)
+                .Where(b => b.EndDate >= DateTime.UtcNow)
+                .OrderByDescending(b => b.CreatedAt)
+                .Select(b => new BookingResponseDto
+                {
+                    Id = b.Id,
+                    UserName = b.UserName,
+                    UserEmail = b.UserEmail,
+                    WorkspaceId = b.Workspace.Id,
+                    WorkspaceName = b.Workspace.Name,
+                    StartDate = b.StartDate,
+                    EndDate = b.EndDate,
+                    PeopleCount = b.Room.Capacity,
+                    Duration = (float)(b.EndDate - b.StartDate).TotalHours
+                })
+                .FirstOrDefaultAsync(); 
+
+            if (booking == null)
+                throw new KeyNotFoundException("No valid bookings found.");
+
+            return booking; 
+        }
+
+
     }
 }

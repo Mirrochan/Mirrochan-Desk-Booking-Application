@@ -80,5 +80,18 @@ namespace DeskBookingAPI.Controllers
                 return BadRequest(ex.Message);
             }
         }
-    }
+        [HttpGet("last")]
+        public async Task<ActionResult<BookingResponseDto>> GetLastBooking()
+        {
+            try
+            {
+                var booking = await _bookingService.GetLastBooking();
+                return Ok(booking);
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+        }
+        }
 }

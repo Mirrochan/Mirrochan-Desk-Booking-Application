@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { WorkspacesService } from '../../data/services/workspaces.service.service';
 import { WorkspaceInfoDto, AvailabilityOptionsDto, WorkspaceType } from '../../data/interfaces/workspace.interface';
 import { FormsModule } from '@angular/forms';
+import { all_bookingsDto } from '../../data/interfaces/all_bookings.interface';
+import { BookingsService } from '../../data/services/bookings.service';
 
 @Component({
   selector: 'app-coworking',
@@ -14,14 +16,20 @@ import { FormsModule } from '@angular/forms';
 })
 export class CoworkingComponent implements OnInit {
   private workspacesService = inject(WorkspacesService);
+  private bookingService = inject(BookingsService);
   workspaces: any[] = [];
   workspaceType = WorkspaceType;
   constructor(private router: Router) { }
+
+  lastValidBooking: all_bookingsDto | null = null;
 
   ngOnInit(): void {
     this.workspacesService.getAllWorkspaces().subscribe({
       next: (val) => (this.workspaces = val),
       error: (err) => console.error('Error fetching workspaces', err)
+    });
+    this.bookingService.getLastValidBooking().subscribe({
+      next: (val) => (this.lastValidBooking = val)
     });
   }
 
@@ -53,20 +61,38 @@ export class CoworkingComponent implements OnInit {
   navigateToBooking(workspaceId: string): void {
     this.router.navigate(['/booking']);
   }
-selectedImages: { [workspaceId: string]: string } = {};
+  selectedImages: { [workspaceId: string]: string } = {};
 
-getAllWorkspaceImages(workspace: any): string[] {
-  return [
-    this.getWorkspaceImagePath(workspace, 'image1'),
-    this.getWorkspaceImagePath(workspace, 'image2'),
-    this.getWorkspaceImagePath(workspace, 'image3'),
-    this.getWorkspaceImagePath(workspace, 'image4')
-  ];
+  getAllWorkspaceImages(workspace: any): string[] {
+    return [
+      this.getWorkspaceImagePath(workspace, 'image1'),
+      this.getWorkspaceImagePath(workspace, 'image2'),
+      this.getWorkspaceImagePath(workspace, 'image3'),
+      this.getWorkspaceImagePath(workspace, 'image4')
+    ];
+  }
+
+  selectImage(workspaceId: string, imageUrl: string) {
+    this.selectedImages[workspaceId] = imageUrl;
+  }
+ formatDateRange(start?: string | Date, end?: string | Date): string {
+  if (!start || !end) return '';
+
+  const startDate = new Date(start);
+  const endDate = new Date(end);
+
+  const options: Intl.DateTimeFormatOptions = {
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric',
+  };
+
+  const formattedStart = startDate.toLocaleDateString('en-US', options);
+  const formattedEnd = endDate.toLocaleDateString('en-US', options);
+
+  return `${formattedStart} to ${formattedEnd}`;
 }
 
-selectImage(workspaceId: string, imageUrl: string) {
-  this.selectedImages[workspaceId] = imageUrl;
-}
 
 }
 

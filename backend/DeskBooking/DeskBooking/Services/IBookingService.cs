@@ -9,5 +9,6 @@ namespace DeskBookingAPI.Services
         Task<List<BookingResponseDto>> GetAllBookings();
         Task<BookingResponseDto> GetBooking(Guid Id);
         Task UpdateBooking(BookingUpdateDto updateBooking);
+        Task<BookingResponseDto> GetLastBooking();
     }
 }
