@@ -16,7 +16,7 @@
         public int[] Capacity { get; set; }
         public string[] Amenities { get; set; } =[];
         public List<BookingModel> Bookings { get; set; } = new();
-        public List<WorkspaceAvailabilityOption> AvailabilityOptions { get; set; } = new();
+        public List<RoomModel> AvailabilityOptions { get; set; } = new();
         public Workspace()
         {
             Id = Guid.NewGuid();

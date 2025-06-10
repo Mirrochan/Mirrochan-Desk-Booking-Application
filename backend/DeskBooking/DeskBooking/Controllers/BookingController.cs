@@ -1,4 +1,5 @@
 using DeskBookingAPI.DTOs;
+using DeskBookingAPI.Exceptions;
 using DeskBookingAPI.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -44,7 +45,15 @@ namespace DeskBookingAPI.Controllers
                 var booking = await _bookingService.CreateBooking(bookingDTO);
                 return Ok();
             }
-            catch (Exception ex) when (ex is ArgumentException || ex is InvalidOperationException)
+            catch (EntityNotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (BookingConflictException ex)
+            {
+                return Conflict(ex.Message);
+            }
+            catch (ArgumentException ex)
             {
                 return BadRequest(ex.Message);
             }

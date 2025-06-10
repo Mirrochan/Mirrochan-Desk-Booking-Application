@@ -23,7 +23,8 @@ export class MessageComponent implements OnInit {
   buttonName: string = "Return";
   ngOnInit(): void {
     this.desc=this.message;
-   console.log(this.data);
+   console.log("data in messega"+this.data);
+   console.log("message in messega"+this.message);
     switch (this.message) {
       case 'confirmation-message': {
         this.imgUrl = 'assets/img/messag-confirm.svg';

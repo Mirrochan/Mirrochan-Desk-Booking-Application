@@ -34,7 +34,6 @@ export class BookingFormComponent implements OnInit {
   availableCapacities: number[] = [];
   showCapacityOptions = false;
 
-  // Місяці з кількістю днів
   months = [
     { name: 'January', days: 31 },
     { name: 'February', days: 28 },
@@ -305,11 +304,18 @@ this.router.navigate(['/my-bookings']);
   }
 
   private handleError(error: any): void {
-    this.messageType = error.error || "error-message";
-    if (this.messageType === "The selected workspace is not available for the specified time period and people count.") {
+    this.messageType = error.error.error;
+      
+   if(this.messageType === undefined){
+      this.messageType = error.error;
+    }
+    
+     if (this.messageType === "The selected workspace is not available for the specified time period and people count.") {
       this.messageType = "notavailable-message";
     }
+    console.log("тип1"+this.messageType);
     this.showMessage = true;
+    console.log("тип"+this.messageType);
     console.error('Error:', error);
   }
 }

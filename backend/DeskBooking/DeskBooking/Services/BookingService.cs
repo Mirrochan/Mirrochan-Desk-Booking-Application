@@ -2,6 +2,8 @@
 using DeskBookingAPI.Data;
 using DeskBookingAPI.DTOs;
 using DeskBookingAPI.Models;
+using DeskBookingAPI.Validators;
+using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 
 namespace DeskBookingAPI.Services
@@ -10,40 +12,61 @@ namespace DeskBookingAPI.Services
     {
         private readonly DeskBookingContext _context;
         private readonly IMapper _mapper;
+        private readonly IValidator<BookingCreateDto> _bookingCreateValidator;
 
-        public BookingService(DeskBookingContext context, IMapper mapper)
+        public BookingService(
+            DeskBookingContext context,
+            IMapper mapper,
+            IValidator<BookingCreateDto> bookingCreateValidator)
         {
             _context = context;
             _mapper = mapper;
+            _bookingCreateValidator = bookingCreateValidator;
         }
 
         public async Task<Guid> CreateBooking(BookingCreateDto bookingDTO)
         {
-            var workspace = await _context.Workspaces.FindAsync(bookingDTO.WorkspaceId);
-            if (workspace == null)
-                throw new ArgumentException("Invalid workspace ID");
+            var validationResult = await _bookingCreateValidator.ValidateAsync(bookingDTO);
 
-            ValidateBookingDates(bookingDTO.StartDate, bookingDTO.EndDate);
-            ValidateBookingDuration(workspace.Type, bookingDTO.StartDate, bookingDTO.EndDate);
+            if (!validationResult.IsValid)
+            {
+                var errors = string.Join("; ", validationResult.Errors.Select(e => e.ErrorMessage));
+                throw new ArgumentException($"Validation failed: {errors}");
+            }
 
-            var availabilityOption = await ValidateAvailability(
-                bookingDTO.WorkspaceId,
-                bookingDTO.StartDate,
-                bookingDTO.EndDate,
-                bookingDTO.PeopleCount
-            );
+            using var transaction = await _context.Database.BeginTransactionAsync(System.Data.IsolationLevel.Serializable);
 
-            var booking = _mapper.Map<BookingModel>(bookingDTO);
-            booking.RoomId = availabilityOption.Id;
-            booking.Workspace = workspace;
+            try
+            {
+                var availabilityOption = await ValidateAvailability(
+                    bookingDTO.WorkspaceId,
+                    bookingDTO.StartDate,
+                    bookingDTO.EndDate,
+                    bookingDTO.PeopleCount
+                );
 
-            _context.Bookings.Add(booking);
-            await _context.SaveChangesAsync();
+                var workspace = await _context.Workspaces.FindAsync(bookingDTO.WorkspaceId);
 
-            return booking.Id;
+                var booking = _mapper.Map<BookingModel>(bookingDTO);
+                booking.RoomId = availabilityOption.Id;
+                booking.Workspace = workspace;
+
+                _context.Bookings.Add(booking);
+                await _context.SaveChangesAsync();
+
+                await transaction.CommitAsync();
+                return booking.Id;
+            }
+            catch (Exception)
+            {
+                await transaction.RollbackAsync();
+                throw;
+            }
         }
+    
 
-        public async Task DeleteBooking(Guid id)
+
+    public async Task DeleteBooking(Guid id)
         {
             var booking = await _context.Bookings.FindAsync(id);
             if (booking == null)
@@ -73,7 +96,6 @@ namespace DeskBookingAPI.Services
                 updateDto.PeopleCount
             );
 
-            // Update fields
             booking.UserName = updateDto.UserName;
             booking.UserEmail = updateDto.UserEmail;
             booking.StartDate = updateDto.StartDate;
@@ -141,7 +163,7 @@ namespace DeskBookingAPI.Services
                 throw new ArgumentException("Open spaces and private rooms can be booked for a maximum of 30 days");
         }
 
-        private async Task<WorkspaceAvailabilityOption> ValidateAvailability(Guid workspaceId, DateTime start, DateTime end, int peopleCount)
+        private async Task<RoomModel> ValidateAvailability(Guid workspaceId, DateTime start, DateTime end, int peopleCount)
         {
             var suitableOptions = await _context.WorkspaceAvailabilityOptions
                 .Where(o => o.WorkspaceId == workspaceId && o.Capacity >= peopleCount)

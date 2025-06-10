@@ -1,6 +1,6 @@
 ﻿namespace DeskBookingAPI.Models
 {
-    public class WorkspaceAvailabilityOption
+    public class RoomModel
     {
         public Guid Id { get; set; }
         public Guid WorkspaceId { get; set; }

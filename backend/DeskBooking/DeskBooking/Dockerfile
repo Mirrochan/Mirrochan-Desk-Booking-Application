@@ -12,7 +12,7 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ../DeskBookingApi.sln .
+COPY ["DeskBooking/DeskBookingAPI.csproj", "DeskBooking/"]
 RUN dotnet restore "./DeskBooking/DeskBookingAPI.csproj"
 COPY . .
 WORKDIR "/src/DeskBooking"
