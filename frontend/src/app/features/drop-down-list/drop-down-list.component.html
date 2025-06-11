@@ -1,0 +1,12 @@
+<div class="dropdown-container" [attr.name]="name">
+  <button type="button" class="dropdown-button" (click)="toggleDropdown()" [class.invalid]="required && !selectedItem">
+    {{ selectedItem || placeholder }}
+<img class="arrow" src="assets/img/Chevron.svg" alt="">
+  </button>
+
+  <ul class="dropdown-list" *ngIf="isOpen">
+    <li *ngFor="let item of items" (click)="selectItem(item)" [class.selected]="item === selectedItem">
+      {{ item }}
+    </li>
+  </ul>
+</div>

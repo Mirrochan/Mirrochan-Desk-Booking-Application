@@ -11,10 +11,11 @@
 using System;
 using System.Reflection;
 
+[assembly: Microsoft.Extensions.Configuration.UserSecrets.UserSecretsIdAttribute("9f52e96a-83f1-4c42-b9a0-0ef03e0d3b90")]
 [assembly: System.Reflection.AssemblyCompanyAttribute("DeskBookingAPI")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+90247e38165e59fd831cf84c04dc84a6532d6c67")]
 [assembly: System.Reflection.AssemblyProductAttribute("DeskBookingAPI")]
 [assembly: System.Reflection.AssemblyTitleAttribute("DeskBookingAPI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

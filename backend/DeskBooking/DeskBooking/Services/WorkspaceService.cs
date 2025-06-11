@@ -32,14 +32,22 @@ namespace DeskBookingAPI.Services
                 {
                     Id = workspace.Id,
                     Name = workspace.Name,
+                    Description = workspace.Description,
                     Type = workspace.Type,
                     Amenities = workspace.Amenities,
                     Capacity = groupedOptions.Select(o => o.Capacity).Distinct().ToArray(),
                     AvailabilityOptions = groupedOptions
                 };
                 workspaces.Add(workspaceDto);
+                workspaces.Reverse();
             }
             return workspaces;
+        }
+
+        public async Task<IEnumerable<WorkspacesListDto>> WorkspacesList()
+        {
+            var workspacesModels = await _context.Workspaces.ToListAsync();
+            return  _mapper.Map<IEnumerable<WorkspacesListDto>>(workspacesModels).ToList();
         }
     }
 }

@@ -10,6 +10,6 @@ namespace DeskBookingAPI.DTOs
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public int PeopleCount { get; set; } = 0;
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        
     }
 }

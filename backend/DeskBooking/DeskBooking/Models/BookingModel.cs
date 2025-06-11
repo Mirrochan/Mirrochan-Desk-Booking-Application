@@ -12,9 +12,7 @@
             public DateTime EndDate { get; set; }
             public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public Guid RoomId { get; set; }
-        public WorkspaceAvailabilityOption Room { get; set; } = null!;
-
-
+        public RoomModel Room { get; set; } = null!;
         public BookingModel()
         {
             Id = Guid.NewGuid();
