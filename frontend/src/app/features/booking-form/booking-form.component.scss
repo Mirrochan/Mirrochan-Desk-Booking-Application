@@ -1,0 +1,227 @@
+
+.goback-btn {
+  display: flex;
+  width: 104px;
+  height: 36px;
+  gap: 4px;
+  border-radius: 4px;
+  padding-top: 20px;
+
+ 
+  cursor: pointer;
+
+  p {
+
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 120%;
+    letter-spacing: 0px;
+    color: var(--main-color);
+    cursor: pointer;
+  }
+
+  img {
+    height: 20px;
+    width: 20px;
+  }
+}
+
+.title {
+  margin-bottom: 44px;
+  margin-top: 20px;
+}
+
+.form-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+
+
+  @media (min-width: 900px) {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+}
+
+.form-left,
+.form-right {
+  flex: 1;
+  background: #ffff;
+  border-radius: 1rem;
+  padding: 2rem;
+  height: 670px;
+
+  @media (min-width: 900px) {
+    margin-bottom: 0;
+  }
+}
+
+.form-left {
+  margin-bottom: 2rem;
+  max-width: 762px;
+  padding: 40px;
+
+  @media (min-width: 900px) {
+    margin-bottom: 0;
+  }
+}
+
+.reservation-section {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.datetime-section {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.form-group {
+  font-size: 16px;
+
+  label {
+    font-size: 16px;
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+
+  }
+
+  input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 16px;
+    height: 48px;
+    background-color: #FCFBFF;
+
+    &:focus {
+      outline: none;
+
+    }
+  }
+}
+
+.date-selectors {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+
+  select {
+    min-width: 0;
+    text-align: center;
+    padding-left: 0.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+.time-grid select {
+  width: 100%;
+}
+
+.label-rooms {
+  margin-bottom: 24px;
+
+  label {
+    margin-bottom: 0px;
+  }
+}
+
+.radio-group {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: normal;
+    cursor: pointer;
+
+    input {
+      width: auto;
+    }
+  }
+}
+
+.date-grid,
+.time-grid {
+  display: grid;
+  gap: 1rem;
+
+  @media (min-width: 600px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.submit-btn {
+  background: var(--main-color);
+  color: white;
+  padding: 1rem 2rem;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  width: 100%;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background: var(--main-color);
+  }
+
+  &:disabled {
+    background: #DFDFFF;
+    cursor: not-allowed;
+  }
+}
+
+.radio-group {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  label {
+    margin-bottom: 0px;
+  }
+}
+
+.custom-radio {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+
+}
+
+.custom-radio input[type="radio"] {
+  display: none;
+}
+
+.radio-box {
+  width: 24px;
+  height: 24px;
+  border-radius: 4px;
+  background-color: #ffffff;
+  border: 2px solid #c0bcd0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+
+
+input[type="radio"]:checked+.radio-box {
+  background-color: var(--main-color);
+  border-color: var(--main-color);
+}
+
+.buttons {
+  display: flex;
+  gap: 16px;
+}

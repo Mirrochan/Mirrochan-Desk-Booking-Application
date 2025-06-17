@@ -1,0 +1,22 @@
+<div class="message-container">
+    <div class="confirmation-card">
+        <div class="header-imgs">
+            <img clas="status" [src]="imgUrl" alt="">
+            <img class="exit" (click)="exit()" src="assets/img/exit.svg" alt="">
+        </div>
+        <div class="confirmation-details">
+            <h2 class="confirmation-title">{{info}}</h2>
+            <p *ngIf="message==='confirmation-message'">
+                Your room
+                for {{data?.peopleCount}} {{data?.peopleCount === 1 ? 'person' : 'people'}} is booked from
+                <strong>{{data?.startDateLocal| date:'MMM d, y'}} to {{data?.endDateLocal| date:'MMM d, y'}}</strong>.
+                A confirmation has been sent to your email <strong>{{data?.userEmail}}</strong>
+            </p>
+            <p *ngIf="message!=='confirmation-message'">{{desc}}</p>
+        </div>
+        <button class="main-button" (click)="navigateToPages()">
+            {{buttonName}}
+        </button>
+
+    </div>
+</div>

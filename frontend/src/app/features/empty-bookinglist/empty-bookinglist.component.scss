@@ -1,0 +1,28 @@
+.container{display: flex;
+flex-direction: column;
+    width: 1280px;
+height: 476px;
+gap: 32px;
+border-radius: 20px;
+padding: 16px;
+background-color: white;
+justify-content: center;
+align-items: center;
+
+}
+.text{display: flex;
+flex-direction: column;
+    width: 503px;
+height: 78px;
+gap: 16px;
+align-items: center;
+}
+button{
+    width: 200px;
+height: 48px;
+gap: 10px;
+border-radius: 8px;
+padding-right: 24px;
+padding-left: 24px;
+
+}

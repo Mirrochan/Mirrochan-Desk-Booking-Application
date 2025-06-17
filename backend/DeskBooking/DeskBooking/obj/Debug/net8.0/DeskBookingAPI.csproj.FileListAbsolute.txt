@@ -40,7 +40,6 @@ E:\IndividualProject\backend\DeskBooking\DeskBooking\obj\Debug\net8.0\staticweba
 E:\IndividualProject\backend\DeskBooking\DeskBooking\obj\Debug\net8.0\staticwebassets\msbuild.buildMultiTargeting.DeskBookingAPI.props
 E:\IndividualProject\backend\DeskBooking\DeskBooking\obj\Debug\net8.0\staticwebassets\msbuild.buildTransitive.DeskBookingAPI.props
 E:\IndividualProject\backend\DeskBooking\DeskBooking\obj\Debug\net8.0\staticwebassets.pack.json
-E:\IndividualProject\backend\DeskBooking\DeskBooking\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
 E:\IndividualProject\backend\DeskBooking\DeskBooking\obj\Debug\net8.0\DeskBook.C66195EA.Up2Date
 E:\IndividualProject\backend\DeskBooking\DeskBooking\obj\Debug\net8.0\DeskBookingAPI.dll
 E:\IndividualProject\backend\DeskBooking\DeskBooking\obj\Debug\net8.0\refint\DeskBookingAPI.dll
@@ -139,3 +138,4 @@ E:\IndividualProject\backend\DeskBooking\DeskBooking\bin\Debug\net8.0\tr\Microso
 E:\IndividualProject\backend\DeskBooking\DeskBooking\bin\Debug\net8.0\zh-Hans\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
 E:\IndividualProject\backend\DeskBooking\DeskBooking\bin\Debug\net8.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
 E:\IndividualProject\backend\DeskBooking\DeskBooking\bin\Debug\net8.0\runtimes\browser\lib\net8.0\System.Text.Encodings.Web.dll
+E:\IndividualProject\backend\DeskBooking\DeskBooking\obj\Debug\net8.0\DeskBookingAPI.sourcelink.json

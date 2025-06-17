@@ -1,13 +1,15 @@
 using DeskBookingAPI.Data;
+using DeskBookingAPI.DTOs;
+using DeskBookingAPI.Middleware;
 using DeskBookingAPI.Services;
 using DeskBookingAPI.Validators;
 using FluentValidation;
+using Microsoft.AspNetCore.Http.Json;
 using Microsoft.EntityFrameworkCore;
 using System;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container
 builder.Services.AddDbContext<DeskBookingContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
@@ -15,25 +17,35 @@ builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddScoped<IBookingService, BookingService>();
 builder.Services.AddScoped<IWorkspaceService, WorkspaceService>();
 builder.Services.AddValidatorsFromAssemblyContaining<BookingCreateValidator>();
+builder.Services.AddScoped<IValidator<BookingCreateDto>, BookingCreateValidator>();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll",
+        policy => policy
+            .AllowAnyOrigin()
+            .AllowAnyHeader()
+            .AllowAnyMethod());
+});
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+
 var app = builder.Build();
 
-// Configure the HTTP request pipeline
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
+app.UseMiddleware<ErrorHandlerMiddleware>();
 app.UseHttpsRedirection();
 app.UseAuthorization();
 
-// Global error handling
+
 app.Use(async (context, next) =>
 {
     try
@@ -61,5 +73,5 @@ using (var scope = app.Services.CreateScope())
     var context = scope.ServiceProvider.GetRequiredService<DeskBookingContext>();
     context.Database.EnsureCreated();
 }
-
+app.UseCors("AllowAll");
 app.Run();

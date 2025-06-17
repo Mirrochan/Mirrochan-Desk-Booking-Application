@@ -1,4 +1,5 @@
 using DeskBookingAPI.DTOs;
+using DeskBookingAPI.Exceptions;
 using DeskBookingAPI.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,19 +16,19 @@ namespace DeskBookingAPI.Controllers
             _bookingService = bookingService;
         }
 
-        [HttpGet("byEmail")]
-        public async Task<ActionResult<IEnumerable<BookingResponseDto>>> GetBookings([FromQuery] string? email)
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<BookingResponseDto>>> GetBookings([FromQuery] Guid id)
         {
-            var bookings = await _bookingService.GetBookings(email);
+            var bookings = await _bookingService.GetBooking(id);
             return Ok(bookings);
         }
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Guid>> GetBooking(Guid id)
+        [HttpGet("getAll")]
+        public async Task<ActionResult<Guid>> GetAllBookings()
         {
             try
             {
-                var booking = await _bookingService.GetBooking(id);
+                var booking = await _bookingService.GetAllBookings();
                 return Ok(booking);
             }
             catch (KeyNotFoundException ex)
@@ -44,7 +45,15 @@ namespace DeskBookingAPI.Controllers
                 var booking = await _bookingService.CreateBooking(bookingDTO);
                 return Ok();
             }
-            catch (Exception ex) when (ex is ArgumentException || ex is InvalidOperationException)
+            catch (EntityNotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (BookingConflictException ex)
+            {
+                return Conflict(ex.Message);
+            }
+            catch (ArgumentException ex)
             {
                 return BadRequest(ex.Message);
             }
@@ -80,5 +89,18 @@ namespace DeskBookingAPI.Controllers
                 return BadRequest(ex.Message);
             }
         }
-    }
+        [HttpGet("last")]
+        public async Task<ActionResult<BookingResponseDto>> GetLastBooking()
+        {
+            try
+            {
+                var booking = await _bookingService.GetLastBooking();
+                return Ok(booking);
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+        }
+        }
 }
