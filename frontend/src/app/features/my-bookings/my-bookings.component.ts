@@ -11,13 +11,13 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-my-bookings',
-  imports: [FormsModule,CommonModule, DeleteMessageComponent, EmptyBookinglistComponent],
+  imports: [FormsModule, CommonModule, DeleteMessageComponent, EmptyBookinglistComponent],
   templateUrl: './my-bookings.component.html',
   styleUrl: './my-bookings.component.scss'
 })
 export class MyBookingsComponent {
 
-  constructor(private router: Router,  private sanitizer: DomSanitizer) { }
+  constructor(private router: Router, private sanitizer: DomSanitizer) { }
   noBookings: boolean = false;
   allBookings: all_bookingsDto[] = [];
 
@@ -95,8 +95,15 @@ export class MyBookingsComponent {
   loadBookings() {
     this.bookingService.getAllBookings().subscribe({
       next: (val) => {
-        this.allBookings = val;
+        this.allBookings = val.map(v=>{v.startDate=new Date(v.startDate);
+          return {
+        ...v,
+        startDate: new Date(v.startDate),
+        endDate: new Date(v.endDate)
+        }
+       } );
         this.noBookings = !val || val.length === 0;
+   
       },
       error: err => {
         console.error(err);
@@ -111,21 +118,22 @@ export class MyBookingsComponent {
   question: string = '';
   answer: any;
   isAnswer: boolean = false;
-  inputQuestion: string='';
+  inputQuestion: string = '';
   async sendQuestionForAi(text: string) {
     console.log(this.allBookings);
-  this.aiService.askQuestion(text, this.allBookings).subscribe({
-    next: async (val) => {
-      const html = await marked(val); 
-      this.question = text;
-      this.answer = this.sanitizer.bypassSecurityTrustHtml(html);
-      this.isAnswer = true;
-    },
-    error: (err) => {
-      console.error('AI request failed', err);
-    }
-  });
-}
+    this.aiService.askQuestion(text, this.allBookings).subscribe({
+      next: async (val) => {
+        const html = await marked(val);
+        this.question = text;
+        this.answer = this.sanitizer.bypassSecurityTrustHtml(html);
+        this.isAnswer = true;
+
+      },
+      error: (err) => {
+        console.error('AI request failed', err);
+      }
+    });
+  }
 
 
 }

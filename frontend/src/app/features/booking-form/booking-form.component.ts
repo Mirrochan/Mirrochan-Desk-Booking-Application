@@ -135,8 +135,8 @@ goBack(): void {
     this.bookingData.email = booking.userEmail;
     this.bookingData.capacity = booking.peopleCount;
 
-    const startDate = new Date(booking.startDate);
-    const endDate = new Date(booking.endDate);
+    const startDate = new Date(booking.startDateLocal);
+    const endDate = new Date(booking.endDateLocal);
 
     this.setDateFields(startDate, true);
     this.setDateFields(endDate, false);
@@ -180,6 +180,7 @@ goBack(): void {
 
     if (selectedWorkspace?.capacity) {
       this.availableCapacities = selectedWorkspace.capacity;
+      this.availableCapacities.sort((a, b) => a - b);;
     }
   }
 
@@ -241,8 +242,8 @@ goBack(): void {
     if (this.mode === 'add') {
       this.bookingsService.addNewBooking(bookingData).subscribe({
       
-        next: () => {this.bookingDate=bookingData;this.handleSuccess('Booking created successfully!')},
-        error: (err) => this.handleError(err)
+        next: () => {"Дані для добав"+console.log(bookingData);this.bookingDate=bookingData;this.handleSuccess('Booking created successfully!')},
+        error: (err) =>{"Дані для добав"+console.log(bookingData); this.handleError(err)}
       });
     } else if (this.bookingId) {
       this.bookingsService.updateBooking({ ...bookingData, id: this.bookingId }).subscribe({
@@ -252,56 +253,63 @@ goBack(): void {
     }
   }
 
-  private prepareBookingData(): AddBookingDto {
-    const workspace = this.workspaces.find(w => w.name === this.bookingData.workspaceType);
-    
-    if (!workspace) {
-      throw new Error('Workspace not found');
-    }
-
-    return {
-      userName: this.bookingData.name,
-      userEmail: this.bookingData.email,
-      workSpaceId: workspace.id,
-      startDate: this.combineDateTime(
-        this.bookingData.startYear,
-        this.bookingData.startMonth,
-        this.bookingData.startDay,
-        this.bookingData.startTime
-      ),
-      endDate: this.combineDateTime(
-        this.bookingData.endYear,
-        this.bookingData.endMonth,
-        this.bookingData.endDay,
-        this.bookingData.endTime
-      ),
-      peopleCount: this.bookingData.capacity ?? 0
-    };
+ private prepareBookingData(): AddBookingDto {
+  const workspace = this.workspaces.find(w => w.name === this.bookingData.workspaceType);
+  
+  if (!workspace) {
+    throw new Error('Workspace not found');
   }
 
-  private combineDateTime(year: string, monthName: string, day: string, time: string): Date {
-    const monthIndex = this.months.findIndex(m => m.name === monthName);
-    const [hourString, minuteString, period] = time.match(/(\d+):(\d+)\s?(AM|PM)/i)!.slice(1);
-    
-    let hour = parseInt(hourString);
-    const minute = parseInt(minuteString);
+  const startDate = this.combineDateTime(
+    this.bookingData.startYear,
+    this.bookingData.startMonth,
+    this.bookingData.startDay,
+    this.bookingData.startTime
+  );
+  
+  const endDate = this.combineDateTime(
+    this.bookingData.endYear,
+    this.bookingData.endMonth,
+    this.bookingData.endDay,
+    this.bookingData.endTime
+  );
 
-    if (period.toUpperCase() === 'PM' && hour < 12) hour += 12;
-    if (period.toUpperCase() === 'AM' && hour === 12) hour = 0;
+  this.logDateTime('Start Date', startDate);
+  this.logDateTime('End Date', endDate);
 
-    return new Date(
-      parseInt(year),
-      monthIndex,
-      parseInt(day),
-      hour,
-      minute
-    );
-  }
+  return {
+    userName: this.bookingData.name,
+    userEmail: this.bookingData.email,
+    workSpaceId: workspace.id,
+    startDateLocal: startDate,
+    endDateLocal: endDate,
+    peopleCount: this.bookingData.capacity ?? 0
+  };
+}
+
+ private combineDateTime(year: string, monthName: string, day: string, time: string): Date {
+  const monthIndex = this.months.findIndex(m => m.name === monthName);
+  const [hourString, minuteString, period] = time.match(/(\d+):(\d+)\s?(AM|PM)/i)!.slice(1);
+  
+  let hour = parseInt(hourString);
+  const minute = parseInt(minuteString);
+
+  if (period.toUpperCase() === 'PM' && hour < 12) hour += 12;
+  if (period.toUpperCase() === 'AM' && hour === 12) hour = 0;
+
+  return new Date(
+    parseInt(year),
+    monthIndex,
+    parseInt(day),
+    hour,
+    minute
+  );
+}
 
   private handleSuccess(message: string): void {
     this.messageType = "confirmation-message";
     this.showMessage = true;
-    setTimeout(() => this.router.navigate(['/bookings']), 2000);
+    
     if(this.mode !== 'add'){
        this.messageType = "confirmation-update-message";
     this.showMessage = true;
@@ -323,4 +331,12 @@ goBack(): void {
  
     console.error('Error:', error);
   }
+  private logDateTime(label: string, date: Date) {
+  console.log(`${label}:`, {
+    Local: date.toLocaleString(),
+    UTC: date.toUTCString(),
+    ISO: date.toISOString(),
+    TimezoneOffset: date.getTimezoneOffset()
+  });
+}
 }

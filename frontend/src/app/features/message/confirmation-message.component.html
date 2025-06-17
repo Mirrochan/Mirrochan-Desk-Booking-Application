@@ -9,7 +9,7 @@
             <p *ngIf="message==='confirmation-message'">
                 Your room
                 for {{data?.peopleCount}} {{data?.peopleCount === 1 ? 'person' : 'people'}} is booked from
-                <strong>{{data?.startDate| date:'MMM d, y'}} to {{data?.endDate| date:'MMM d, y'}}</strong>.
+                <strong>{{data?.startDateLocal| date:'MMM d, y'}} to {{data?.endDateLocal| date:'MMM d, y'}}</strong>.
                 A confirmation has been sent to your email <strong>{{data?.userEmail}}</strong>
             </p>
             <p *ngIf="message!=='confirmation-message'">{{desc}}</p>

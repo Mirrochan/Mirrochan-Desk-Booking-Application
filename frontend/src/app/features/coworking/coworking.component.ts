@@ -45,7 +45,10 @@ goBack(): void {
   }
 });
     this.bookingService.getLastValidBooking().subscribe({
-      next: (val) => (this.lastValidBooking = val)
+      next: (val) => (this.lastValidBooking = val
+    
+        
+      )
     });
    
     

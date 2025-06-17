@@ -24,12 +24,12 @@ namespace DeskBookingAPI.Validators
                     return await context.Workspaces.AnyAsync(w => w.Id == id);
                 }).WithMessage("Workspace does not exist.");
 
-            RuleFor(x => x.StartDate)
+            RuleFor(x => x.StartDateUTC)
                 .GreaterThan(DateTime.Now)
                 .WithMessage("Start date must be in the future.");
 
             RuleFor(x => x)
-                .Must(x => x.EndDate > x.StartDate)
+                .Must(x => x.EndDateUTC > x.StartDateUTC)
                 .WithMessage("End date must be after start date.");
 
             RuleFor(x => x)
@@ -38,7 +38,7 @@ namespace DeskBookingAPI.Validators
                     var workspace = await context.Workspaces.FirstOrDefaultAsync(w => w.Id == dto.WorkspaceId, ct);
                     if (workspace != null)
                     {
-                        var duration = dto.EndDate - dto.StartDate;
+                        var duration = dto.EndDateUTC - dto.StartDateUTC;
 
                         if (workspace.Type == WorkspaceType.MeetingRoom && duration.TotalDays > 1)
                         {

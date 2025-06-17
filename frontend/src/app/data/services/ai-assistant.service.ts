@@ -31,7 +31,19 @@ export class AIAssistantService {
         );
     }
     private buildPrompt(question: string, bookings: all_bookingsDto[]): string {
-        const bookingContext = JSON.stringify(bookings);
+        const bookingContext = JSON.stringify(bookings, (key, value) => {
+            if (key === 'startDate' || key === 'endDate') {
+                const d = new Date(value);
+                const month = (d.getMonth() + 1).toString().padStart(2, '0');
+                const day = d.getDate().toString().padStart(2, '0');
+                const year = d.getFullYear();
+                const hours = d.getHours().toString().padStart(2, '0');
+                const minutes = d.getMinutes().toString().padStart(2, '0');
+                return `${month}/${day}/${year} ${hours}:${minutes}`;
+            }
+            return value;
+        });
+
         console.log(bookingContext);
         return `
       You are a booking assistant. Answer questions based on the following information::

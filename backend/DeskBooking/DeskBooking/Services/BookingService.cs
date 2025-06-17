@@ -40,8 +40,8 @@ namespace DeskBookingAPI.Services
             {
                 var availabilityOption = await ValidateAvailability(
                     bookingDTO.WorkspaceId,
-                    bookingDTO.StartDate,
-                    bookingDTO.EndDate,
+                    bookingDTO.StartDateUTC,
+                    bookingDTO.EndDateUTC,
                     bookingDTO.PeopleCount
                 );
 
@@ -86,20 +86,20 @@ namespace DeskBookingAPI.Services
             if (workspace == null)
                 throw new ArgumentException("Invalid workspace ID");
 
-            ValidateBookingDates(updateDto.StartDate, updateDto.EndDate);
-            ValidateBookingDuration(workspace.Type, updateDto.StartDate, updateDto.EndDate);
+            ValidateBookingDates(updateDto.StartDateUTC, updateDto.EndDateUTC);
+            ValidateBookingDuration(workspace.Type, updateDto.StartDateUTC, updateDto.EndDateUTC);
 
             var availabilityOption = await ValidateAvailability(
                 updateDto.WorkspaceId,
-                updateDto.StartDate,
-                updateDto.EndDate,
+                updateDto.StartDateUTC,
+                updateDto.EndDateUTC,
                 updateDto.PeopleCount
             );
 
             booking.UserName = updateDto.UserName;
             booking.UserEmail = updateDto.UserEmail;
-            booking.StartDate = updateDto.StartDate;
-            booking.EndDate = updateDto.EndDate;
+            booking.StartDate = updateDto.StartDateUTC;
+            booking.EndDate = updateDto.EndDateUTC;
             booking.RoomId = availabilityOption.Id;
             booking.WorkspaceId = updateDto.WorkspaceId;
             booking.Workspace = workspace;

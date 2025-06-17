@@ -3,7 +3,7 @@ export interface UpdateBookingDto{
     userName:string;
     userEmail:string;
     workSpaceId:string;
-    startDate:Date;
-    endDate:Date;
+     startDateLocal: Date;
+  endDateLocal: Date;
     peopleCount:number;
 }

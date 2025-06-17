@@ -4,6 +4,7 @@ using DeskBookingAPI.Middleware;
 using DeskBookingAPI.Services;
 using DeskBookingAPI.Validators;
 using FluentValidation;
+using Microsoft.AspNetCore.Http.Json;
 using Microsoft.EntityFrameworkCore;
 using System;
 
