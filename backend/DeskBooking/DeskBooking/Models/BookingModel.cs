@@ -13,11 +13,7 @@
             public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public Guid RoomId { get; set; }
         public RoomModel Room { get; set; } = null!;
-        public BookingModel()
-        {
-            Id = Guid.NewGuid();
-
-        }
+       
 
     }
     }

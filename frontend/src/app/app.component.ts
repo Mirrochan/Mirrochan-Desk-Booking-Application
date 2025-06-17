@@ -1,16 +1,13 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { NavigationEnd, Route, Router, RouterOutlet } from '@angular/router';
-import { MyBookingsComponent } from './features/my-bookings/my-bookings.component';
 import { WorkspacesService } from './data/services/workspaces.service.service';
-import { CoworkingComponent } from "./features/coworking/coworking.component";
-import { BookingFormComponent } from "./features/booking-form/booking-form.component";
-import { MessageComponent } from "./features/message/message.component";
 import { CommonModule } from '@angular/common';
 import { filter } from 'rxjs';
+
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule ,RouterOutlet, MyBookingsComponent, CoworkingComponent, BookingFormComponent, MessageComponent],
+  imports: [CommonModule, RouterOutlet],
   templateUrl:'app.component.html',
   styleUrl:'app.component.scss'
 })
@@ -34,7 +31,7 @@ export class AppComponent implements OnInit {
   }
 
   goToWorkspace() {
-    this.router.navigate(['/coworking']);
+    this.router.navigate(['/coworkingList']);
   }
 
   goToMyBookings() {

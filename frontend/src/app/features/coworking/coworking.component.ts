@@ -1,11 +1,14 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { WorkspacesService } from '../../data/services/workspaces.service.service';
 import { WorkspaceInfoDto, AvailabilityOptionsDto, WorkspaceType } from '../../data/interfaces/workspace.interface';
 import { FormsModule } from '@angular/forms';
 import { all_bookingsDto } from '../../data/interfaces/all_bookings.interface';
 import { BookingsService } from '../../data/services/bookings.service';
+import { CoworkingService } from '../../data/services/coworking.service';
+import { EmptyWorkingspacesComponent } from "../empty-workingspaces/empty-workingspaces.component";
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-coworking',
@@ -15,22 +18,37 @@ import { BookingsService } from '../../data/services/bookings.service';
   styleUrls: ['./coworking.component.scss']
 })
 export class CoworkingComponent implements OnInit {
-  private workspacesService = inject(WorkspacesService);
+
+  private coworkingService = inject(CoworkingService);
   private bookingService = inject(BookingsService);
+  private route = inject(ActivatedRoute);
   workspaces: any[] = [];
   workspaceType = WorkspaceType;
-  constructor(private router: Router) { }
+  spaceId: string = '';
+  constructor(private router: Router,private location: Location) { }
 
   lastValidBooking: all_bookingsDto | null = null;
-
+ 
+goBack(): void {
+  this.location.back();
+}
   ngOnInit(): void {
-    this.workspacesService.getAllWorkspaces().subscribe({
-      next: (val) => (this.workspaces = val),
-      error: (err) => console.error('Error fetching workspaces', err)
-    });
+    this.spaceId = this.route.snapshot.params['id'];
+    this.coworkingService.getById(this.spaceId).subscribe({
+  next: (val) => {
+    this.workspaces = val;
+
+  },
+  error: (err) => {
+    console.error('Error fetching workspaces', err);
+  
+  }
+});
     this.bookingService.getLastValidBooking().subscribe({
       next: (val) => (this.lastValidBooking = val)
     });
+   
+    
   }
 
   navigateToMyBookings(): void {
@@ -40,15 +58,14 @@ export class CoworkingComponent implements OnInit {
     const workspaceFolder = workspace.name.toLowerCase().replace(' ', '_');
     return `assets/${workspaceFolder}/${imageName}.png`;
   }
-
   getAmenityImage(amenity: string): string {
     return `assets/img/${amenity}.svg`;
   }
-
   getCapacityDisplay(workspace: WorkspaceInfoDto): string {
     if (WorkspaceType.OpenSpace || workspace.name === "Open Space" || workspace.capacity.length === 0) {
       return `${workspace.availabilityOptions[0]?.quantity || 0} desks`;
     }
+
     if (workspace.capacity.length === 2) { return workspace.capacity.join(' or ') + ' people' }
 
     return workspace.capacity.join(', ') + ' people';
@@ -75,24 +92,22 @@ export class CoworkingComponent implements OnInit {
   selectImage(workspaceId: string, imageUrl: string) {
     this.selectedImages[workspaceId] = imageUrl;
   }
- formatDateRange(start?: string | Date, end?: string | Date): string {
-  if (!start || !end) return '';
+  formatDateRange(start?: string | Date, end?: string | Date): string {
+    if (!start || !end) return '';
 
-  const startDate = new Date(start);
-  const endDate = new Date(end);
+    const startDate = new Date(start);
+    const endDate = new Date(end);
 
-  const options: Intl.DateTimeFormatOptions = {
-    month: 'short',
-    day: 'numeric',
-    year: 'numeric',
-  };
+    const options: Intl.DateTimeFormatOptions = {
+      month: 'short',
+      day: 'numeric',
+      year: 'numeric',
+    };
 
-  const formattedStart = startDate.toLocaleDateString('en-US', options);
-  const formattedEnd = endDate.toLocaleDateString('en-US', options);
+    const formattedStart = startDate.toLocaleDateString('en-US', options);
+    const formattedEnd = endDate.toLocaleDateString('en-US', options);
+    return `${formattedStart} to ${formattedEnd}`;
+  }
 
-  return `${formattedStart} to ${formattedEnd}`;
+
 }
-
-
-}
-

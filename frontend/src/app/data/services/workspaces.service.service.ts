@@ -9,10 +9,10 @@ export class WorkspacesService {
 
  http: HttpClient = inject(HttpClient)
  getAllWorkspaces(){
-  return this.http.get<WorkspaceInfoDto[]>("https://localhost:7060/api/workspaces")
+  return this.http.get<WorkspaceInfoDto[]>("http://localhost:5009/api/workspaces")
  }
   getWorkspacesList(){
-  return this.http.get<WorkspaceInfoDto[]>("https://localhost:7060/api/workspacesList")
+  return this.http.get<WorkspaceInfoDto[]>("http://localhost:5009/api/workspacesList")
  }
  
 }

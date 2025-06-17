@@ -1,0 +1,40 @@
+<div class="workspaces-container">
+  <div class="title">
+    <h1>Available workspaces</h1>
+    <p>Browse and choose a workspace that fits your needs</p>
+  </div>
+  <div *ngIf="isEmpty" class="div">
+    <app-empty-workingspaces></app-empty-workingspaces>
+  </div>
+  <div class="div" *ngFor="let coworking of coworkings">
+    <div class="workspace-card">
+
+      <img [src]="'assets/coworkings/' + coworking.name + '.jpg'" alt="{{ coworking.name }}" />
+      <div class="content-section">
+        <div class="head">
+          <div class="">
+            <div class="header">
+              <h2>{{coworking.name}}</h2>
+            </div>
+            <p>{{coworking.description}}</p>
+          </div>
+          <button class="book-btn" (click)="navigateToWorkspace(coworking.id)">
+            View details
+          </button>
+        </div>
+        <div class="details">
+          <div class="section">
+            <img src="assets/img/Location.svg" alt="">
+            <p>{{coworking.address}}</p>
+          </div>
+
+          <div class="section">
+            <img src="assets/img/Desks.svg" alt="">
+            <p>🪑 {{ getCount(coworking, 'OpenSpace') }} · 🔒 {{ getCount(coworking, 'PrivateRoom') }} ·
+              👥{{ getCount(coworking, 'MeetingRoom') }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

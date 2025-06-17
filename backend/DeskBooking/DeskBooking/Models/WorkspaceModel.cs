@@ -17,9 +17,8 @@
         public string[] Amenities { get; set; } =[];
         public List<BookingModel> Bookings { get; set; } = new();
         public List<RoomModel> AvailabilityOptions { get; set; } = new();
-        public Workspace()
-        {
-            Id = Guid.NewGuid();
-        }
+          public Guid CoworkingId { get; set; }
+    public CoworkingModel Coworking { get; set; }
+     
     }
 }

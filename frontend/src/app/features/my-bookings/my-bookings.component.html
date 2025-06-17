@@ -1,37 +1,63 @@
+<app-delete-message *ngIf="showMessage" [idDelete]="chosenBookingId" (close)="showMessage = false; this.loadBookings()">
+</app-delete-message>
+<div class="title">
+  <h1 *ngIf="!noBookings">My bookings on Green Coworking</h1>
+  <h1 *ngIf="noBookings">My bookings</h1>
+</div>
+<app-empty-bookinglist *ngIf="noBookings">
+</app-empty-bookinglist>
+<div *ngFor="let booking of allBookings" class="card">
+  <div class="image-section">
+    <img [src]="getImage(booking.workspaceName)" alt="Open space" />
+  </div>
+  <div class="content-section">
+    <div class="header">
+      <h2>{{booking.workspaceName}} <span class="h2" *ngIf="booking.peopleCount >0"> for
+          {{booking.peopleCount}} people </span></h2>
+    </div>
+    <div class="card-info">
+      <div class="icon-text">
+        <img src="assets/img/Calendar.svg" alt="Desks icon" />
+        <span>{{printDate(booking.startDate,booking.endDate)}}</span>
+      </div>
+      <div class="icon-text">
+        <img src="assets/img/Clock.svg" alt="Desks icon" />
+        <span>{{printTime(booking.startDate, booking.endDate, booking.duration)}}</span>
+      </div>
+    </div>
+  </div>
+  <div class="card-actions">
+    <img src="assets/img/Edit.svg" (click)="editBooking(booking.id)" alt="">
 
-    <app-delete-message *ngIf="showMessage" [idDelete]="chosenBookingId"
-        (close)="showMessage = false; this.loadBookings()">
-    </app-delete-message>
-    <div class="title">
-        <h1 *ngIf="!noBookings">My bookings on Green Coworking</h1>
-        <h1 *ngIf="noBookings">My bookings</h1>
+    <img src="assets/img/Delete.svg" (click)="deleteBooking(booking.id)" alt="">
+  </div>
+</div>
+<div class="ai-container">
+  <h2>AI assistant</h2>
+  <div *ngIf="isAnswer" class="answer">
+    <div class="">
+      <p class="question"> {{this.question}}</p>
     </div>
-    <app-empty-bookinglist *ngIf="noBookings">
-    </app-empty-bookinglist>
-    <div *ngFor="let booking of allBookings" class="card">
-        <div class="image-section">
-            <img [src]="getImage(booking.workspaceName)" alt="Open space" />
-        </div>
-        <div class="content-section">
-            <div class="header">
-                <h2>{{booking.workspaceName}} <span class="h2" *ngIf="booking.peopleCount >0"> for
-                        {{booking.peopleCount}} people </span></h2>
-            </div>
-            <div class="card-info">
-                <div class="icon-text">
-                    <img src="assets/img/Calendar.svg" alt="Desks icon" />
-                    <span>{{printDate(booking.startDate,booking.endDate)}}</span>
-                </div>
-                <div class="icon-text">
-                    <img src="assets/img/Clock.svg" alt="Desks icon" />
-                    <span>{{printTime(booking.startDate, booking.endDate, booking.duration)}}</span>
-                </div>
-            </div>
-        </div>
-        <div class="card-actions">
-            <img src="assets/img/Edit.svg" (click)="editBooking(booking.id)" alt="">
-            
-            <img src="assets/img/Delete.svg" (click)="deleteBooking(booking.id)"
-                alt="">
-        </div>
+    <div [innerHTML]="this.answer" class="answer-text"></div>
+  </div>
+  <div class="">
+    <p class="example-title">Ask something else</p>
+    <div class="examples-container">
+      <button (click)="sendQuestionForAi('How many bookings do I have?')">
+        How many bookings do I have?
+      </button>
+      <button (click)="sendQuestionForAi('What do I have booked for next week?')">
+        What do I have booked for next week?
+      </button>
+      <button (click)="sendQuestionForAi('List all my private room bookings')">
+        List all my private room bookings
+      </button>
     </div>
+  </div>
+
+  <div class="answer-input">
+    <input type="text" [(ngModel)]="inputQuestion" placeholder="Ask anything..." />
+    <button (click)="sendQuestionForAi(inputQuestion)"> <img src="assets/img/Send.svg" alt="Send" />
+    </button>
+  </div>
+</div>

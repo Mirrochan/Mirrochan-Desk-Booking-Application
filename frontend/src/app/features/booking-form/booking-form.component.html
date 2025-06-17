@@ -1,10 +1,11 @@
 <div class="booking-container">
-  <div class="goback-btn" (click)="goToMyBookings()">
+  <div class="goback-btn" (click)="goBack()">
     <img src="assets/img/goBack.svg" alt="">
     <p>Go back</p>
   </div>
   <div class="title">
     <h1>{{ mode === 'add' ? 'Book your workspace' : 'Edit your booking' }}</h1>
+
   </div>
   <form class="form-layout" (ngSubmit)="onSubmit()" #bookingForm="ngForm">
     <div class="form-left">

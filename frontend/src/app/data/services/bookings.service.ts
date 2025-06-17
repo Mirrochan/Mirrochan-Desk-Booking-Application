@@ -8,7 +8,7 @@ import { UpdateBookingDto } from '../interfaces/update_booking.interface';
   providedIn: 'root'
 })
 export class BookingsService {
-  private readonly apiUrl = "https://localhost:7060/api/Bookings";
+  private readonly apiUrl = "http://localhost:5009/api/Bookings";
   http: HttpClient = inject(HttpClient);
 
   addNewBooking(data: AddBookingDto) {

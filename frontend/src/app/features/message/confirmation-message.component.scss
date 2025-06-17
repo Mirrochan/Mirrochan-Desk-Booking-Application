@@ -21,7 +21,7 @@ position: fixed;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   padding: 40px;
   max-width: 728px;
-  height: 373px;
+  min-height: 373px;
   width: 100%;
   gap: 32px;
 }
@@ -29,7 +29,7 @@ position: fixed;
   display: flex;
  justify-content: space-between;
  .exit{
-  height: 36px;
+  min-height: 36px;
   width: 36px;
   cursor: pointer;
  }
@@ -49,6 +49,10 @@ position: fixed;
   color: black;
   font-weight: 700;
 }
+.main-button{
+  height: 48px;
+  width: 100%;
 
+}
 
 

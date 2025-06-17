@@ -5,18 +5,23 @@ import { CommonModule } from '@angular/common';
 import { DeleteMessageComponent } from "../delete-message/delete-message.component";
 import { EmptyBookinglistComponent } from "../empty-bookinglist/empty-bookinglist.component";
 import { Router } from '@angular/router';
-
+import { AIAssistantService } from '../../data/services/ai-assistant.service';
+import { marked } from 'marked';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-my-bookings',
-  imports: [CommonModule, DeleteMessageComponent, EmptyBookinglistComponent],
+  imports: [FormsModule,CommonModule, DeleteMessageComponent, EmptyBookinglistComponent],
   templateUrl: './my-bookings.component.html',
   styleUrl: './my-bookings.component.scss'
 })
 export class MyBookingsComponent {
-  constructor(private router: Router) { }
-  noBookings: boolean = false;
-  allBookings: all_bookingsDto[] | null = null;
 
+  constructor(private router: Router,  private sanitizer: DomSanitizer) { }
+  noBookings: boolean = false;
+  allBookings: all_bookingsDto[] = [];
+
+  aiService = inject(AIAssistantService);
   bookingService = inject(BookingsService);
   ngOnInit() {
     this.loadBookings();
@@ -88,17 +93,39 @@ export class MyBookingsComponent {
     return `assets/${nameFolder}/image1.png`;
   }
   loadBookings() {
-  this.bookingService.getAllBookings().subscribe({
-    next: (val) => {
-      this.allBookings = val;
-      this.noBookings = !val || val.length === 0;
+    this.bookingService.getAllBookings().subscribe({
+      next: (val) => {
+        this.allBookings = val;
+        this.noBookings = !val || val.length === 0;
+      },
+      error: err => {
+        console.error(err);
+        this.noBookings = true;
+      }
+    });
+  }
+  editBooking(id: string) {
+    this.router.navigate(['/bookings/edit', id]);
+  }
+
+  question: string = '';
+  answer: any;
+  isAnswer: boolean = false;
+  inputQuestion: string='';
+  async sendQuestionForAi(text: string) {
+    console.log(this.allBookings);
+  this.aiService.askQuestion(text, this.allBookings).subscribe({
+    next: async (val) => {
+      const html = await marked(val); 
+      this.question = text;
+      this.answer = this.sanitizer.bypassSecurityTrustHtml(html);
+      this.isAnswer = true;
     },
-    error: err => {
-      console.error(err);
-      this.noBookings = true; // показуємо, якщо сталася помилка
+    error: (err) => {
+      console.error('AI request failed', err);
     }
   });
-}editBooking(id: string) {
-  this.router.navigate(['/bookings/edit', id]);
 }
+
+
 }

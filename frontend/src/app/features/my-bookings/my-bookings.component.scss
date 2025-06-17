@@ -1,7 +1,8 @@
-.title{
+.title {
     margin-bottom: 44px;
     margin-top: 60px;
 }
+
 .card {
     max-width: 1280px;
     margin: 2rem auto;
@@ -13,6 +14,7 @@
     overflow: hidden;
     padding: 16px;
 
+   
     h2,
     .h2 {
         font-family: Inter;
@@ -91,11 +93,12 @@
         }
     }
 }
+
 .icon-text {
     margin-top: 12px;
-    display: inline-flex; 
-    align-items: center; 
-    gap: 0.5rem; 
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
 
     img {
         display: block;
@@ -110,10 +113,118 @@
 .card-actions {
     display: flex;
     gap: 16px;
-       cursor: pointer;
+    cursor: pointer;
 }
 
 img {
     width: 44px;
     height: 44px;
+}
+.ai-container{
+    display: flex;
+    flex-direction: column;
+    gap: 44px;
+}
+.answer {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    border-radius: 8px;
+    border-width: 1px;
+    padding: 24px;
+    background-color: white;
+
+    .question {
+
+        font-weight: 700;
+        font-size: 24px;
+        line-height: 24px;
+        letter-spacing: 0%;
+   
+
+    }
+
+    .answer-text {
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 24px;
+        letter-spacing: 0%;
+ 
+    }
+}
+.example-title{
+   margin-bottom:24px;
+
+font-weight: 600;
+font-size: 18px;
+line-height: 120%;
+letter-spacing: 0px;
+
+}
+.examples-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 16px;
+  p{
+    font-size: 18px;
+  }
+  
+}
+
+.examples-container button {
+    width: none;
+   max-height: 43px;
+  padding: 8px 14px;
+  font-size: 14px;
+  border: 1px solid #a3a3ff;
+  background-color: #fff;
+  color: #4f46e5;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.examples-container button:hover {
+  background-color: #f0f4ff;
+}
+
+.answer-input {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 6px 10px;
+  background-color: #f9f9f9;
+  height: 64px;
+}
+
+.answer-input input[type="text"] {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-size: 14px;
+  background: transparent;
+  padding: 6px 0;
+}
+
+.answer-input button {
+
+ max-height: 44px;
+  width: 44px;
+  border: none;
+  padding: 13px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.answer-input button:hover {
+  background-color: #4f46e5;
+}
+
+.answer-input button img {
+  width: 18px;
+  height: 18px;
+
 }

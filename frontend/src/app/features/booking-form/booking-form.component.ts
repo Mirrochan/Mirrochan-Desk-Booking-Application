@@ -9,6 +9,7 @@ import { DropDownListComponent } from '../drop-down-list/drop-down-list.componen
 import { MessageComponent } from '../message/message.component';
 import { WorkspaceInfoDto } from '../../data/interfaces/workspace.interface';
 import { AddBookingDto } from '../../data/interfaces/add_booking.interface';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-booking-form',
@@ -18,6 +19,9 @@ import { AddBookingDto } from '../../data/interfaces/add_booking.interface';
   styleUrls: ['./booking-form.component.scss']
 })
 export class BookingFormComponent implements OnInit {
+goToMyBookings() {
+  this.router.navigate(['/my-bookings']);
+}
 
   private bookingsService = inject(BookingsService);
   private workspaceService = inject(WorkspacesService);
@@ -75,8 +79,9 @@ export class BookingFormComponent implements OnInit {
     startTime: '9:00 AM',
     endTime: '5:00 PM'
   };
-goToMyBookings() {
-this.router.navigate(['/my-bookings']);
+  constructor(private location: Location) {}
+goBack(): void {
+  this.location.back();
 }
   ngOnInit(): void {
     this.bookingId = this.route.snapshot.params['id'];
@@ -313,9 +318,9 @@ this.router.navigate(['/my-bookings']);
      if (this.messageType === "The selected workspace is not available for the specified time period and people count.") {
       this.messageType = "notavailable-message";
     }
-    console.log("тип1"+this.messageType);
+
     this.showMessage = true;
-    console.log("тип"+this.messageType);
+ 
     console.error('Error:', error);
   }
 }

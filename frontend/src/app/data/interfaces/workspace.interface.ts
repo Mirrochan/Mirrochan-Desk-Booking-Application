@@ -19,7 +19,3 @@ export interface WorkspaceInfoDto {
   availabilityOptions: AvailabilityOptionsDto[];
  
 }
-export interface WorkspaceDto{
-    id: string;
-  name: string;
-}
