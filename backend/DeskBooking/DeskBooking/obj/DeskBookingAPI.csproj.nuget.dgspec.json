@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "E:\\IndividualProject\\backend\\DeskBooking\\DeskBooking\\DeskBookingAPI.csproj": {}
+    "e:\\IndividualProject\\backend\\DeskBooking\\DeskBooking\\DeskBookingAPI.csproj": {}
   },
   "projects": {
-    "E:\\IndividualProject\\backend\\DeskBooking\\DeskBooking\\DeskBookingAPI.csproj": {
+    "e:\\IndividualProject\\backend\\DeskBooking\\DeskBooking\\DeskBookingAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\IndividualProject\\backend\\DeskBooking\\DeskBooking\\DeskBookingAPI.csproj",
+        "projectUniqueName": "e:\\IndividualProject\\backend\\DeskBooking\\DeskBooking\\DeskBookingAPI.csproj",
         "projectName": "DeskBookingAPI",
-        "projectPath": "E:\\IndividualProject\\backend\\DeskBooking\\DeskBooking\\DeskBookingAPI.csproj",
+        "projectPath": "e:\\IndividualProject\\backend\\DeskBooking\\DeskBooking\\DeskBookingAPI.csproj",
         "packagesPath": "C:\\Users\\marin\\.nuget\\packages\\",
-        "outputPath": "E:\\IndividualProject\\backend\\DeskBooking\\DeskBooking\\obj\\",
+        "outputPath": "e:\\IndividualProject\\backend\\DeskBooking\\DeskBooking\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\marin\\AppData\\Roaming\\NuGet\\NuGet.Config",

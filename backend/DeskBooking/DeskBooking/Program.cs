@@ -18,7 +18,8 @@ builder.Services.AddScoped<IBookingService, BookingService>();
 builder.Services.AddScoped<IWorkspaceService, WorkspaceService>();
 builder.Services.AddValidatorsFromAssemblyContaining<BookingCreateValidator>();
 builder.Services.AddScoped<IValidator<BookingCreateDto>, BookingCreateValidator>();
-
+builder.Services.AddScoped<AiAssistantService>();
+builder.Services.AddHttpClient<AiAssistantService>();
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll",
